@@ -57,6 +57,7 @@ header {
   max-width: 600px;
   width: 60%;
   text-align: center;
+  display: block;
 }
 
 #start-quiz-button {
@@ -64,12 +65,14 @@ header {
 }
 
 
-
+/* this section is display:none by default,
+changed in javascript to display:block when required */
 #quiz-wrapper {
   margin: 100px auto;
   max-width: 600px;
   width: 60%;
   text-align: left;
+  /* display: none; */
 }
 
 #question {
@@ -88,11 +91,13 @@ header {
 }
 
 
-
+/* this section is display:none by default,
+changed in javascript to display:block when required */
 #all-done-wrapper {
   margin: 100px auto;
   width: 220px;
   text-align: left;
+  /* display: none; */
 }
 
 #initials-input-wrapper {
@@ -104,10 +109,12 @@ header {
 }
 
 
-
+/* this section is display:none by default,
+changed in javascript to display:block when required */
 #high-scores-wrapper {
   margin-top: 100px;
   margin-bottom: 100px;
+  /* display: none; */
 }
 
 #high-scores-grid-container {
