@@ -24,7 +24,15 @@ var clearButton = document.getElementById("clear-high-scores");
 // global variables
 
 
+// event listeners
+
+
+// functions
+
 function hideElement(element) {
-  element.setAttribute("display", "none");
+  element.style.display = "none";
 }
 
+function showElement(element) {
+  element.style.display = "block";
+}
