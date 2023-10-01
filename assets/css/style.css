@@ -1,0 +1,140 @@
+:root {
+  --light: hsl(219, 79%, 90%);
+  --medium: hsl(219, 79%, 60%);
+  --dark: hsl(219, 79%, 50%);
+
+  --width: 60%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  /* margin: 0px;
+  padding: 0px; */
+  font-family: Arial, Helvetica, sans-serif
+}
+
+
+h1 {
+  text-align: center;
+}
+
+
+header {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.button, #timer {
+  color: white;
+  font-weight: bold;
+  width: fit-content;
+  padding: 5px 15px;
+  margin: 10px;
+  border-radius: 5px;
+  background-color: var(--dark);
+  box-shadow: 0 0 3px var(--dark);
+}
+
+#timer {
+  width: 60px;
+  text-align: center;
+}
+
+.button:hover {
+  background-color: var(--medium);
+  box-shadow: 0 0 10px var(--dark);
+  cursor: pointer;
+}
+
+
+#welcome-wrapper {
+  margin: 100px auto;
+  width: var(--width);
+  text-align: center;
+}
+
+#start-quiz-button {
+  margin: 10px auto;
+}
+
+#quiz-wrapper {
+  margin: 100px auto;
+  width: var(--width);
+  text-align: left;
+}
+
+#question {
+  margin-left: 10px;
+}
+
+#result-message {
+  font-style: italic;
+  font-size: 120%;
+  margin-top: 20px;
+  padding-top: 10px;
+  padding-left: 10px;
+  border-top: solid;
+  border-width: 1px;
+  border-color: var(--light);
+}
+
+
+#all-done-wrapper {
+  margin: 100px auto;
+  width: 220px;
+  text-align: left;
+}
+
+#initials-input-wrapper {
+  display: flex;
+}
+
+#initials-input {
+  margin-top: 15px;
+}
+
+
+#high-scores-wrapper {
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+#high-scores-grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  row-gap: 4px;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.position {
+  text-align: right;
+  padding: 5px 22px 5px 20px;
+  border-top-left-radius: 10px;
+}
+
+.initials {
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.score {
+  text-align: right;
+  padding: 5px 55px 5px 0;
+  border-bottom-right-radius: 10px;
+}
+
+.position,
+.initials,
+.score {
+  background-color: var(--light);
+  box-shadow: 0 0 3px var(--light);
+}
+
+#high-scores-buttons-wrapper {
+  display: flex;
+  justify-content: center

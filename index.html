@@ -23,7 +23,7 @@
     <header>
         <!-- link to high scores on top left -->
         <!-- not a new page, just change current page  -->
-        <div id="high-scores-button">High Scores</div>
+        <div class="button" id="high-scores-button">High Scores</div>
 
         <!-- timer on top right -->
         <div id="timer">1:30</div>
@@ -31,100 +31,135 @@
     </header>
     <main>
 
-        <!-- welcome title div -->
-        <h1 id="welcome-title">Coding Quiz Challenge</h1>
+        <!-- welcome wrapper div -->
+        <div id="welcome-wrapper">
 
-        <!-- welcome message div -->
-        <div id="welcome-message">Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by <span id="penalty">10</span> seconds!</div>
+            <!-- welcome title h1 -->
+            <h1 id="welcome-title">Coding Quiz Challenge</h1>
 
-        <!-- start quiz button div -->
-        <div id="start-quiz-button">Start Quiz</div>
+            <!-- welcome message div -->
+            <div id="welcome-message">Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by <span id="penalty">10</span> seconds!</div>
 
-        <!-- quiz question div -->
-        <h2 id="question">Arrays in JavaScript can be used to store ____.</h2>
-
-        <!-- response 1-4 divs -->
-        <div id="response1">1. numbers and strings</div>
-        <div id="response2">2. other arrays</div>
-        <div id="response3">3. booleans </div>
-        <div id="response4">4. all of the above</div>
-
-        <!-- answer div -->
-        <div id="result-message">Correct!</div>
-
-        <!-- all done title div -->
-        <h2 id="all-done-title">All done!</h2>
-
-        <!-- final score div -->
-        <div id="final-score">Your final score is <span id=score">22</span>.</div>
-
-        <!-- initials input wrapper -->
-        <div id="initials-input-wrapper">
-
-            <!-- initials input message -->
-            <div id="initials-input-message">Enter initials:</div>
-
-            <!-- initials input field -->
-            <form>
-                <input type="text" id="initials-input" placeholder="Enter initials">
-                <!-- does the above also need  name="initials-input" ? -->
-            </form>
-
-            <!-- initials subit button -->
-            <div id="initials-submit-button">Submit</div>
+            <!-- start quiz button div -->
+            <div class="button" id="start-quiz-button">Start Quiz</div>
 
         </div>
 
-        <!-- high scores title div -->
-        <h1 id="high-scores-title">High Scores</h1>
 
-        <!-- high scores grid container -->
-        <div id="high-scores-grid-container">
+        <!-- quiz wrapper div -->
+        <div id="quiz-wrapper">
 
-            <!-- high score row divs -->
-            <div id="position1">1.</div>
-            <div id="initials1">DSW</div>
-            <div id="score1">58</div>
+            <!-- quiz question h2 -->
+            <h2 id="question">Arrays in JavaScript can be used to store ____.</h2>
 
-            <div id="position2">2.</div>
-            <div id="initials2">KCW</div>
-            <div id="score2">56</div>
+            <!-- response 1-4 divs -->
+            <div class="button" id="response1">1. numbers and strings</div>
+            <div class="button" id="response2">2. other arrays</div>
+            <div class="button" id="response3">3. booleans </div>
+            <div class="button" id="response4">4. all of the above</div>
 
-            <div id="position3">3.</div>
-            <div id="initials3">GTW</div>
-            <div id="score3">52</div>
-
-            <div id="position4">4.</div>
-            <div id="initials4">JAZ</div>
-            <div id="score4">46</div>
-
-            <div id="position5">5.</div>
-            <div id="initials5">IMW</div>
-            <div id="score5">41</div>
-
-            <div id="position6">6.</div>
-            <div id="initials6">MSW</div>
-            <div id="score6">38</div>
-
-            <div id="position7">7.</div>
-            <div id="initials7">PMW</div>
-            <div id="score7">31</div>
-
-            <div id="position8">8.</div>
-            <div id="initials8">GWM</div>
-            <div id="score8">22</div>
-
-            <div id="position9">9.</div>
-            <div id="initials9">RJM</div>
-            <div id="score9">13</div>
-
-            <div id="position10">10.</div>
-            <div id="initials10">PWM</div>
-            <div id="score10">7</div>
+            <!-- answer div -->
+            <div id="result-message">Correct!</div>
 
         </div>
+
+
+        <!-- all done wrapper div -->
+        <div id="all-done-wrapper">
+
+            <!-- all done title h2 -->
+            <h2 id="all-done-title">All done!</h2>
+
+            <!-- final score div -->
+            <div id="final-score">Your final score is <span id=score">22</span>.</div>
+
+            <!-- initials input wrapper -->
+            <div id="initials-input-wrapper">
+
+                <!-- initials input field -->
+                <form>
+                    <input type="text" id="initials-input" placeholder="Enter initials">
+                    <!-- does the above also need  name="initials-input" ? -->
+                </form>
+
+                <!-- initials subit button -->
+                <div class="button" id="initials-submit-button">Submit</div>
+
+            </div>
+            
+        </div>
+
+        
+        
+        <!-- high scores wrapper div -->
+        <div id="high-scores-wrapper">
+
+            <!-- high scores title h1 -->
+            <h1 id="high-scores-title">High Scores</h1>
+
+            <!-- high scores grid container -->
+            <div id="high-scores-grid-container">
+
+                <!-- high score row divs -->
+                <div class="position" id="position1">1.</div>
+                <div class="initials" id="initials1">DSW</div>
+                <div class="score" id="score1">58</div>
+
+                <div class="position" id="position2">2.</div>
+                <div class="initials" id="initials2">KCW</div>
+                <div class="score" id="score2">56</div>
+
+                <div class="position" id="position3">3.</div>
+                <div class="initials" id="initials3">GTW</div>
+                <div class="score" id="score3">52</div>
+
+                <div class="position" id="position4">4.</div>
+                <div class="initials" id="initials4">JAZ</div>
+                <div class="score" id="score4">46</div>
+
+                <div class="position" id="position5">5.</div>
+                <div class="initials" id="initials5">IMW</div>
+                <div class="score" id="score5">41</div>
+
+                <div class="position" id="position6">6.</div>
+                <div class="initials" id="initials6">MSW</div>
+                <div class="score" id="score6">38</div>
+
+                <div class="position" id="position7">7.</div>
+                <div class="initials" id="initials7">PMW</div>
+                <div class="score" id="score7">31</div>
+
+                <div class="position" id="position8">8.</div>
+                <div class="initials" id="initials8">GWM</div>
+                <div class="score" id="score8">22</div>
+
+                <div class="position" id="position9">9.</div>
+                <div class="initials" id="initials9">RJM</div>
+                <div class="score" id="score9">13</div>
+
+                <div class="position" id="position10">10.</div>
+                <div class="initials" id="initials10">PWM</div>
+                <div class="score" id="score10">7</div>
+
+            </div>
+
+            <!-- high scores buttons wrapper div -->
+            <div id="high-scores-buttons-wrapper">
+
+                <!-- initials subit button -->
+                <div class="button" id="go-back">Go Back</div>
+                
+                <!-- initials subit button -->
+                <div class="button" id="clear-high-scores">Clear High Scores</div>
+
+            </div>
+
+        </div>
+
 
     </main>
+
+    <script src="./assets/js/script.js"></script>
 
 </body>
 </html>
