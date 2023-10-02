@@ -44,18 +44,39 @@ const four = "4. "; // prepended to response 4
 var timeRemaining = 0;
 var quizComplete = false;
 var questionNumber = 0;
+
 var questions = {
   1: {
     question: `Arrays in JavaScript can be used to store ${blank}.`,
-    response1: "",
-    response2: "",
-    response3: "",
-    response4: "",
-    answer: 4,
+    response1: "numbers and strings",
+    response2: "other arrays",
+    response3: "booleans",
+    response4: "all of the above",
+    answer: 4
+  },
+  2: {
+    question: `Question 2 ${blank}.`,
+    response1: "numbers and strings",
+    response2: "other arrays",
+    response3: "booleans",
+    response4: "all of the above",
+    answer: 4
+  },
+  3: {
+    question: `Question 3 ${blank}.`,
+    response1: "numbers and strings",
+    response2: "other arrays",
+    response3: "booleans",
+    response4: "all of the above",
+    answer: 4
   }
 }
-var highScores; // OBJECT VAR
 
+var highScores; // will be loaded from localStorage or initialized if not found
+
+
+// NUMBER OF QUESTIONS
+console.log(Object.keys(questions).length);
 
 function startTimer() {
   timeRemaining = quizDuration;
@@ -242,11 +263,59 @@ function submitInitials() {
   scoresMode();
 }
 
-function clearHighScores() {
-
+function loadHighScores() {
+  highScores = JSON.parse(localStorage.getItem("highScoresStringify"));
+  // if high scores aren't saved in local storage, initialize the object variable
+  if (!highScores) {
+    initializeHighScores();
+  }
+  updateHighScores();
 }
 
-// mode functions
+function saveHighScores() {
+  updateHighScores();
+  localStorage.setItem("highScoresStringify", JSON.stringify(highScores));
+}
+
+function clearHighScores() {
+  initializeHighScores();
+  saveHighScores();
+}
+
+// FOR TESTING
+function initializeHighScores() {
+  highScores = {
+    1: {initials: "DSW", score: 58},
+    2: {initials: "KCW", score: 56},
+    3: {initials: "GTW", score: 52},
+    4: {initials: "JAZ", score: 46},
+    5: {initials: "IMW", score: 41},
+    6: {initials: "MSW", score: 38},
+    7: {initials: "PWM", score: 31},
+    8: {initials: "GWM", score: 22},
+    9: {initials: "RJM", score: 13},
+    10: {initials: "PMW", score: 7}
+  };
+}
+// function initializeHighScores() {
+//   highScores = {
+//     1: {initials: "", score: ""},
+//     2: {initials: "", score: ""},
+//     3: {initials: "", score: ""},
+//     4: {initials: "", score: ""},
+//     5: {initials: "", score: ""},
+//     6: {initials: "", score: ""},
+//     7: {initials: "", score: ""},
+//     8: {initials: "", score: ""},
+//     9: {initials: "", score: ""},
+//     10: {initials: "", score: ""}
+//   };
+// }
+
+
+// mode functions display:block one of the four primary wrapper-enclosed elements:
+// welcome, quiz, all done, and high scores
+// also shows/hides the SHOW SCORES button, the HOME button, and the TIMER, as appropriate
 function welcomeMode() {
   showElement(welcomeEl);
   hideElement(quizEl);
@@ -268,7 +337,7 @@ function quizMode() {
   showElement(homeButton);
   showElement(timerEl);
 }
-// MAYBE HOME BUTTON INSTEAD OF SHOW SCORES BUTTON IN TOP LEFT ON THIS PAGE
+
 function doneMode() {
   hideElement(welcomeEl);
   hideElement(quizEl);
@@ -290,8 +359,6 @@ function scoresMode() {
   showElement(homeButton);
   hideElement(timerEl);
 }
-
-// functions
 
 function hideElement(element) {
   element.style.display = "none";
