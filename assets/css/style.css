@@ -27,7 +27,7 @@ header {
 }
 
 
-.button, #timer {
+.button, #timer, button {
   color: white;
   font-weight: bold;
   width: fit-content;
@@ -112,14 +112,17 @@ changed in javascript to display:block when required */
   display: none;
 }
 
-#initials-input-wrapper {
-  display: flex;
-}
 
 #initials-input {
-  margin-top: 15px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  width: 100px;
+  text-align: center;
 }
 
+form {
+  display: flex;
+}
 
 /* this section is display:none by default,
 changed in javascript to display:block when required */

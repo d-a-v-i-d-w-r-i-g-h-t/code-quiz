@@ -13,7 +13,6 @@ let response1Button = document.getElementById("response1");
 let response2Button = document.getElementById("response2");
 let response3Button = document.getElementById("response3");
 let response4Button = document.getElementById("response4");
-let submitButton = document.getElementById("initials-submit-button");
 let clearButton = document.getElementById("clear-high-scores");
 
 // other pointer variables
@@ -80,7 +79,7 @@ let highScores; // will be loaded from localStorage or initialized if not found
 
 
 // NUMBER OF QUESTIONS
-console.log(Object.keys(questions).length);
+// console.log(Object.keys(questions).length);
 
 function startTimer() {
   timeRemaining = quizDuration;
@@ -232,32 +231,36 @@ response4Button.addEventListener("click", function() {
   endQuiz(); // TEMP FOR DEV
 });
 
-submitButton.addEventListener("click", function() {
-  submitInitialsInputForm();
-});
-// submitButton.addEventListener("click", function() {
-//   submitInitials();
-// });
+initialsInputForm.addEventListener("submit", formSubmitted);
 
-initialsInputForm.addEventListener("submit", function(event) {
+// initialsInputForm.addEventListener("submit", function(event) {
+//   event.preventDefault();
+
+//   console.log("form submit event listener activated");
+//   let validInput = false;
+//   let newInitials = initialsInput.value;
+//   console.log("new initials: " + newInitials);
+
+//   if (newInitials.value != "") {
+//     submitInitials(newInitials);
+//   }
+// });
+function formSubmitted(event) {
   event.preventDefault();
 
+  console.log("form submit event listener activated");
   let validInput = false;
   let newInitials = initialsInput.value;
+  console.log("new initials: " + newInitials);
 
-  if (newInitials.value != "") {
+  if (newInitials != "" && newInitials.length <= 5) {
     submitInitials(newInitials);
   }
-})
+}
 
 clearButton.addEventListener("click", function() {
   clearHighScores();
 });
-
-
-function submitInitialsInputForm() {
-  initialsInputForm.submit();
-}
 
 
 
@@ -322,7 +325,7 @@ function submitInitials(str) {
 
 function loadHighScores() {
   highScores = JSON.parse(localStorage.getItem("highScoresStringify"));
-  
+
   // if high scores aren't saved in local storage, initialize the object variable
   if (!highScores) {
     initializeHighScores();
