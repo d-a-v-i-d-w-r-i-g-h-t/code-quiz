@@ -2,8 +2,8 @@
   --light: hsl(219, 79%, 90%);
   --medium: hsl(219, 79%, 60%);
   --dark: hsl(219, 79%, 50%);
-
-  --green: green;
+  --themeRed: #de2626;
+  --themeGreen: #1d881d;
 
   /* greens, reds for changing answer buttons, timer */
 }
@@ -38,9 +38,10 @@ header {
   border-radius: 5px;
   background-color: var(--dark);
   box-shadow: 0 0 3px var(--dark);
+  transition: background-color 0.1s, box-shadow 0.3s;
 }
 
-.button:hover {
+.button:hover, button:hover {
   background-color: var(--medium);
   box-shadow: 0 0 10px var(--dark);
   cursor: pointer;
@@ -87,6 +88,16 @@ changed in javascript to display:block when required */
   width: 60%;
   text-align: left;
   display: none;
+  padding: 20px;
+  border: solid;
+  border-width: 3px;
+  border-color: white;
+  border-radius: 20px;
+  transition: border-color 0.3s, box-shadow 0.5s;
+}
+/* this is the styling for when there's 10 seconds left */
+#quiz-wrapper {
+  /* border-color: var(--themeRed); */
 }
 
 #question {

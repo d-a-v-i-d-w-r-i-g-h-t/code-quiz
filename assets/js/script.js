@@ -30,7 +30,7 @@ let initialsInput = document.getElementById("initials-input");
 let resultMessageEl = document.getElementById("result-message");
 
 // global constants
-const quizDuration = 33; // quiz duration in seconds
+const quizDuration = 18; // quiz duration in seconds
 const penalty = 10; // seconds removed from timer for each incorrect response
 const secondsPerMinute = 60; // 60 seconds in a minute
 const leadingZero = "0"; // used to pad timer seconds to ensure two digit seconds value
@@ -47,7 +47,7 @@ const wrong = "Wrong!";
 const themeRed = "#de2626";
 const themeGreen = "#1d881d";
 
-
+// ADD DIVS FOR HIGH SCORES RATHER THAN ALWAYS SHOWING ALL OF THEM
 // global variables
 let timeRemaining = 0;
 let quizComplete = false;
@@ -85,6 +85,7 @@ let questions = {
 
 
 function startTimer() {
+  let redFrameOn = false;
   timeRemaining = quizDuration;
   updateTimer();
 
@@ -94,26 +95,52 @@ function startTimer() {
       clearInterval(timerInterval);
     }
 
+    // prevents timer from updating after the quiz is complete
     timeRemaining--;
     if (timeRemaining >=0 && quizComplete === false) {
       updateTimer();
     }
 
+    // change timer to red when there are 30 seconds left
     if (timeRemaining <= 30) {
       colorElement("#timer", themeRed);
     }
 
-    if (timeRemaining <= 10) {
-      // FLASHING RED BORDER AROUND QUESTION BOX ****************************
-    }
-
+    // when the timeRemaining reaches 0, turn off both intervals
+    // reset the quiz border, and proceed to done mode
     if (timeRemaining <= 0) {
       clearInterval(timerInterval);
+      clearInterval(flashInterval);
+      resetQuizBorder();
       doneMode();
     }
 
-  }, 1000);
+  }, 1000,(0));
 
+  // create a second interval to add a red flashing effect at 15 seconds remaining
+  let flashInterval = setInterval(function() {
+    if (timeRemaining <= 15) {
+
+      if (redFrameOn === true) {
+        resetQuizBorder();
+      } else {
+        colorQuizBorder(themeRed);
+      }
+      redFrameOn = !redFrameOn;
+    }
+  }, 500,(1));
+
+}
+
+function colorQuizBorder(color) {
+  quizEl.style.borderColor = color;
+  quizEl.style.boxShadow = "0 0 10px 2px " + color + ", inset 0 0 10px 2px " + color;
+}
+
+function resetQuizBorder() {
+  quizEl.style.borderColor = "";
+  quizEl.style.boxShadow = "";
+  quizEl.style.transition = "border-color 0.5s, box-shadow 0.3s";
 }
 
 
@@ -271,12 +298,10 @@ clearButton.addEventListener("click", function() {
 function formSubmitted(event) {
   event.preventDefault();
 
-  let validInput = false;
-
   // take first three characters of input string, make all caps
   let newInitials = initialsInput.value.slice(0,3).toUpperCase();
 
-  // proceed if input is not blank
+  //proceed if input is not blank
   if (newInitials != "") {
     submitInitials(newInitials);
     initialsInput.value = ""; // reset form
