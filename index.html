@@ -21,9 +21,13 @@
 <!-- body section of the page contains user-visible content -->
 <body>
     <header>
+        <!-- only one of the following two buttons will be visible at a time, -->
+        <!--    the other will be display:none -->
         <!-- link to high scores on top left -->
-        <!-- not a new page, just change current page  -->
         <div class="button" id="high-scores-button">High Scores</div>
+
+        <!-- link to home on top left -->
+        <div class="button" id="home-button">Home</div>
 
         <!-- timer on top right -->
         <div id="timer"><span id="minutes">0</span>:<span id="seconds">00</span></div>
@@ -71,7 +75,7 @@
             <h2 id="all-done-title">All done!</h2>
 
             <!-- final score div -->
-            <div id="final-score">Your final score is <span id=score">22</span>.</div>
+            <div id="final-score">Your final score is <span id="myScore">0</span>.</div>
 
             <!-- initials input wrapper -->
             <div id="initials-input-wrapper">
@@ -143,16 +147,8 @@
 
             </div>
 
-            <!-- high scores buttons wrapper div -->
-            <div id="high-scores-buttons-wrapper">
-
-                <!-- initials subit button -->
-                <div class="button" id="go-back">Go Back</div>
-                
-                <!-- initials subit button -->
-                <div class="button" id="clear-high-scores">Clear High Scores</div>
-
-            </div>
+            <!-- clear high scores button -->
+            <div class="button" id="clear-high-scores">Clear High Scores</div>
 
         </div>
 

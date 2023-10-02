@@ -22,10 +22,9 @@ h1 {
 
 
 header {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
-
 
 
 .button, #timer {
@@ -39,21 +38,29 @@ header {
   box-shadow: 0 0 3px var(--dark);
 }
 
-#timer {
-  width: 60px;
-  text-align: center;
-}
-
 .button:hover {
   background-color: var(--medium);
   box-shadow: 0 0 10px var(--dark);
   cursor: pointer;
 }
 
+
+#high-scores-button {
+  justify-self: start
+}
+
+#home-button {
+  justify-self: start;
+  display: none;
+}
+
 /* this section is display:none by default,
 changed in javascript to display:block when required */
 #timer {
-  display:none;
+  width: 60px;
+  text-align: center;
+  justify-self: end;
+  display: none;
 }
 
 
@@ -155,7 +162,6 @@ changed in javascript to display:block when required */
   box-shadow: 0 0 3px var(--light);
 }
 
-#high-scores-buttons-wrapper {
-  display: flex;
-  justify-content: center
+#clear-high-scores {
+  margin: 20px auto;
 }
