@@ -20,12 +20,79 @@ var clearButton = document.getElementById("clear-high-scores");
 var timerEl = document.getElementById("timer");
 
 // global constants
-
-
+const quizDuration = 90; // quiz duration in seconds
+const penalty = 10; // seconds removed from timer for each incorrect response
+const numResponses = 4; // each quiz question is multiple choice with four possible answers
+const secondsPerMinute = 60; // 60 seconds in a minute
 
 // global variables
+var timeRemaining = 0;
 
 
+function startTimer() {
+  timeRemaining = quizDuration;
+
+}
+
+function minutesRemaining() {
+  var minutes = 0;
+  var minutes = Math.floor(timeRemaining / secondsPerMinute);
+}
+
+// function from project word-guess with Steve Sills
+function resolveKeyPress(event) {
+  keyPress = event.key;
+  validateKeyPress(keyPress);
+}
+
+// FUNCTION validateKeyPress
+// gatekeeper for keypresses
+// only valid key presses, i.e. '1', '2', '3', ... up to the number
+// of multiple choice answers will be used to check the answer
+function validateKeyPress(key) {
+  var validSelection = false
+
+ // check if the key press is a number
+ if (isNaN(key) = false) {
+    // check that the key press is a number within the range of valid responses
+    for (var i = 0; i < numResponses; i++) {
+      if (i+1 === key) {
+        validSelection = true;
+      }
+    }
+  }
+  
+  if (validSelection === true) {
+    checkAnswer(key);
+  }
+}
+
+function checkAnswer(key) {
+  var responseIsCorrect = false;
+
+  if (key === correctAnswer) {
+    responseIsCorrect = true;
+  }
+  
+  if (responseIsCorrect === true) {
+    correctResponse();
+  } else {
+    incorrectResponse();
+  }
+  // color correct response green
+  // pause for 1 second
+
+  nextQuestion();
+}
+
+function incorrectResponse() {
+  timeRemaining -= penalty;
+  // color selected response button red,
+}
+
+function correctResponse() {
+
+}
 
 // event listeners
 showScoresButton.addEventListener("click", function() {
