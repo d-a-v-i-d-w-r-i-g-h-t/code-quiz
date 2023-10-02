@@ -47,7 +47,10 @@ const wrong = "Wrong!";
 const themeRed = "#de2626";
 const themeGreen = "#1d881d";
 
+// **************************
 // ADD DIVS FOR HIGH SCORES RATHER THAN ALWAYS SHOWING ALL OF THEM
+// **************************
+
 // global variables
 let timeRemaining = 0;
 let quizComplete = false;
@@ -83,6 +86,99 @@ let questions = {
 };
 
 
+  //------------------------------//
+ //  "always-on" event listeners //
+//------------------------------//
+
+showScoresButton.addEventListener("click", function() {
+  loadHighScores();
+  scoresMode();
+});
+
+homeButton.addEventListener("click", function() {
+  goHome();
+});
+
+startButton.addEventListener("click", function() {
+  startQuiz();
+});
+
+initialsInputForm.addEventListener("submit", formSubmitted);
+
+clearButton.addEventListener("click", function() {
+  clearHighScores();
+});
+
+
+
+  //-----------------------------//
+ //  Function: startQuiz        //
+//-----------------------------//
+
+function startQuiz() {
+  quizComplete = false;
+  quizMode();
+  resetElementColor("#timer");
+  startTimer();
+  questionNumber = 0;
+  nextQuestion();
+
+  addQuizEventListeners();
+}
+
+  //-----------------------------------//
+ //  Function: addQuizEventListeners  //
+//-----------------------------------//
+
+function addQuizEventListeners() {
+  document.addEventListener("keydown", resolveKeyPress);
+
+  response1Button.addEventListener("click", function() {
+    checkAnswer(1);
+  });
+  
+  response2Button.addEventListener("click", function() {
+    checkAnswer(2);
+  });
+  
+  response3Button.addEventListener("click", function() {
+    checkAnswer(3);
+  });
+  
+  response4Button.addEventListener("click", function() {
+    checkAnswer(4);
+  });
+}
+
+  //--------------------------------------//
+ //  Function: removeQuizEventListeners  //
+//--------------------------------------//
+
+function removeQuizEventListeners() {
+  document.removeEventListener("keydown", resolveKeyPress);
+
+  response1Button.removeEventListener("click", function() {
+    checkAnswer(1);
+  });
+  
+  response2Button.removeEventListener("click", function() {
+    checkAnswer(2);
+  });
+  
+  response3Button.removeEventListener("click", function() {
+    checkAnswer(3);
+  });
+  
+  response4Button.removeEventListener("click", function() {
+    checkAnswer(4);
+  });
+}
+
+
+
+  //-----------------------------//
+ //  Function: startTimer       //
+//-----------------------------//
 
 function startTimer() {
   let redFrameOn = false;
@@ -129,66 +225,36 @@ function startTimer() {
       redFrameOn = !redFrameOn;
     }
   }, 500,(1));
-
-}
-
-function colorQuizBorder(color) {
-  quizEl.style.borderColor = color;
-  quizEl.style.boxShadow = "0 0 10px 2px " + color + ", inset 0 0 10px 2px " + color;
-}
-
-function resetQuizBorder() {
-  quizEl.style.borderColor = "";
-  quizEl.style.boxShadow = "";
-  quizEl.style.transition = "border-color 0.5s, box-shadow 0.3s";
 }
 
 
-function minutesRemaining() {
-  let minutes = Math.floor(timeRemaining / secondsPerMinute);
-  return minutes;
-}
 
-function secondsRemaining() {
-  let seconds = timeRemaining % secondsPerMinute; // % is the remainder operator
-  // need seconds to always be two digits for the timer
-  // add a leading zero if seconds < 10
-  // if (toString(seconds).split("").length === 1) { // more complicated method without hardcoding a number
-  if (seconds < ten) {
-    seconds = leadingZero + seconds;
-  }
-  return seconds;
-}
+  //-----------------------------//
+ //  Function: nextQuestion     //
+//-----------------------------//
 
-function updateTimer() {
-  minutesSpan.textContent = minutesRemaining();
-  secondsSpan.textContent = secondsRemaining();
-}
-
-// function from project word-guess with Steve Sills
-function resolveKeyPress(event) {
-  keyPress = event.key;
-  console.log(keyPress);
-  validateKeyPress(keyPress);
-}
-
-// gatekeeper for keypresses
-// only valid key presses, i.e. '1', '2', '3', ... up to the number
-// of multiple choice answers will be used to check the answer
-function validateKeyPress(key) {
-  let validSelection = false
-
-  // check that the key press is a number within the range of valid responses
-  for (let i = 0; i < numResponses; i++) {
-    if (i+1 == key) {
-      validSelection = true;
-    }
-  }
+function nextQuestion() {
+  questionNumber++;
   
-  if (validSelection === true) {
-    checkAnswer(key);
+  let numberOfQuestions = Object.keys(questions).length;
+
+  if (questionNumber > numberOfQuestions) {
+    endQuiz();
+  } else {
+    // update question and response text
+    questionEl.textContent = questions[questionNumber].question;
+    response1.textContent = one + questions[questionNumber].response1;
+    response2.textContent = two + questions[questionNumber].response2;
+    response3.textContent = three + questions[questionNumber].response3;
+    response4.textContent = four + questions[questionNumber].response4;
   }
 }
+
+
+
+  //-----------------------------//
+ //  Function: checkAnswer      //
+//-----------------------------//
 
 function checkAnswer(key) {
   let responseIsCorrect = false;
@@ -213,17 +279,10 @@ function checkAnswer(key) {
 }
 
 
-function colorElement(element, color) {
-  document.querySelector(element).style.backgroundColor = color;
-  document.querySelector(element).style.boxShadow = "0 0 5px " + color;
-}
 
-function resetElementColor(element) {
-  document.querySelectorAll(element).forEach(function(item) {
-    item.style.backgroundColor = "";
-    item.style.boxShadow = "";
-  });
-}
+  //----------------------------------//
+ //  Function: displayResultMessage  //
+//----------------------------------//
 
 function displayResultMessage() {
   // display the result message (Correct! / Wrong!) and
@@ -241,43 +300,84 @@ function displayResultMessage() {
   }, 5000);
 }
 
-function nextQuestion() {
-  questionNumber++;
+
+
+
+function colorQuizBorder(color) {
+  quizEl.style.borderColor = color;
+  quizEl.style.boxShadow = "0 0 10px 2px " + color + ", inset 0 0 10px 2px " + color;
+}
+
+function resetQuizBorder() {
+  quizEl.style.borderColor = "";
+  quizEl.style.boxShadow = "";
+  quizEl.style.transition = "border-color 0.5s, box-shadow 0.3s";
+}
+
+
+
+  //-----------------------------//
+ //  Function: updateTimer      //
+//-----------------------------//
+
+function updateTimer() {
+// convert timeRemaining to m:ss format for display
+  minutesSpan.textContent = minutesRemaining();
+  secondsSpan.textContent = secondsRemaining();
+}
+function minutesRemaining() {
+  let minutes = Math.floor(timeRemaining / secondsPerMinute);
+  return minutes;
+}
+function secondsRemaining() {
+  let seconds = timeRemaining % secondsPerMinute; // % is the remainder operator
+  // need seconds to always be two digits for the timer
+  // add a leading zero if seconds < 10
+  // if (toString(seconds).split("").length === 1) { // more complicated method without hardcoding a number
+  if (seconds < ten) {
+    seconds = leadingZero + seconds;
+  }
+  return seconds;
+}
+
+
+
+  //-----------------------------//
+ //  Function: resolveKeyPress  //
+//-----------------------------//
+
+// function from project word-guess with Steve Sills
+function resolveKeyPress(event) {
+  keyPress = event.key;
+  console.log(keyPress);
+
+  let validSelection = false
+
+  // check that the key press is a number within the range of valid responses
+  for (let i = 0; i < numResponses; i++) {
+    if (i+1 == keyPress) {
+      validSelection = true;
+    }
+  }
   
-
-  let numberOfQuestions = Object.keys(questions).length;
-
-  if (questionNumber > numberOfQuestions) {
-    endQuiz();
-  } else {
-    // update question and response text
-    questionEl.textContent = questions[questionNumber].question;
-    response1.textContent = one + questions[questionNumber].response1;
-    response2.textContent = two + questions[questionNumber].response2;
-    response3.textContent = three + questions[questionNumber].response3;
-    response4.textContent = four + questions[questionNumber].response4;
+  if (validSelection === true) {
+    checkAnswer(keyPress);
   }
 }
 
-// event listeners
-showScoresButton.addEventListener("click", function() {
-  loadHighScores();
-  scoresMode();
-});
 
-homeButton.addEventListener("click", function() {
-  goHome();
-});
 
-startButton.addEventListener("click", function() {
-  startQuiz();
-});
+function colorElement(element, color) {
+  document.querySelector(element).style.backgroundColor = color;
+  document.querySelector(element).style.boxShadow = "0 0 5px " + color;
+}
 
-initialsInputForm.addEventListener("submit", formSubmitted);
-
-clearButton.addEventListener("click", function() {
-  clearHighScores();
-});
+function resetElementColor(element) {
+  document.querySelectorAll(element).forEach(function(item) {
+    item.style.backgroundColor = "";
+    item.style.boxShadow = "";
+  });
+}
 
 
 function formSubmitted(event) {
@@ -300,61 +400,6 @@ function goHome() {
   welcomeMode();
 }
 
-function startQuiz() {
-  quizComplete = false;
-  quizMode();
-  resetElementColor("#timer");
-  startTimer();
-  questionNumber = 0;
-  nextQuestion();
-
-  addQuizEventListeners();
-}
-
-function addQuizEventListeners() {
-  document.addEventListener("keydown", resolveKeyPress);
-
-  response1Button.addEventListener("click", function() {
-    checkAnswer(1);
-  });
-  
-  response2Button.addEventListener("click", function() {
-    checkAnswer(2);
-  });
-  
-  response3Button.addEventListener("click", function() {
-    checkAnswer(3);
-  });
-  
-  response4Button.addEventListener("click", function() {
-    checkAnswer(4);
-  });
-  
-  
-}
-
-function removeQuizEventListeners() {
-  document.removeEventListener("keydown", resolveKeyPress);
-
-  response1Button.removeEventListener("click", function() {
-    checkAnswer(1);
-  });
-  
-  response2Button.removeEventListener("click", function() {
-    checkAnswer(2);
-  });
-  
-  response3Button.removeEventListener("click", function() {
-    checkAnswer(3);
-  });
-  
-  response4Button.removeEventListener("click", function() {
-    checkAnswer(4);
-  });
-  
-  
-}
-
 function endQuiz() {
   removeQuizEventListeners();
 
@@ -367,6 +412,10 @@ function endQuiz() {
   finalScoreSpan.textContent = newScore; 
   doneMode();
 }
+
+  //----------------------------//
+ //  Function: submitInitials  //
+//----------------------------//
 
 function submitInitials(str) {
   loadHighScores();
@@ -406,6 +455,11 @@ function submitInitials(str) {
   scoresMode();
 }
 
+
+  //------------------------------------------------------//
+ //  Functions: load, save, update, and clearHighScores  //
+//------------------------------------------------------//
+
 function loadHighScores() {
   highScores = JSON.parse(localStorage.getItem("highScoresStringify"));
 
@@ -415,7 +469,10 @@ function loadHighScores() {
   }
   updateHighScores();
 }
-
+function saveHighScores() {
+  updateHighScores();
+  localStorage.setItem("highScoresStringify", JSON.stringify(highScores));
+}
 function updateHighScores() {
   numberOfHighScores = Object.keys(highScores).length;
   for (let i = 1; i <= numberOfHighScores; i++) {
@@ -423,13 +480,6 @@ function updateHighScores() {
     document.getElementById("score" + i).textContent = highScores[i].score;
   }
 }
-
-
-function saveHighScores() {
-  updateHighScores();
-  localStorage.setItem("highScoresStringify", JSON.stringify(highScores));
-}
-
 function clearHighScores() {
   initializeHighScores();
   saveHighScores();
@@ -465,6 +515,11 @@ function initializeHighScores() {
   };
 }
 
+
+
+  //------------------//
+ //  Mode Functions  //
+//------------------//
 
 // mode functions display:block one of the four primary wrapper-enclosed elements:
 // welcome, quiz, all done, and high scores
