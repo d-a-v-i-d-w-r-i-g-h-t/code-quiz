@@ -20,19 +20,56 @@ var clearButton = document.getElementById("clear-high-scores");
 var timerEl = document.getElementById("timer");
 var minutesSpan = document.getElementById("minutes");
 var secondsSpan = document.getElementById("seconds");
+var questionEl = document.getElementById("question");
+var response1El = document.getElementById("response1");
+var response2El = document.getElementById("response2");
+var response3El = document.getElementById("response3");
+var response4El = document.getElementById("response4");
+
 
 // global constants
-const quizDuration = 90; // quiz duration in seconds
+const quizDuration = 63; // quiz duration in seconds
 const penalty = 10; // seconds removed from timer for each incorrect response
 const numResponses = 4; // each quiz question is multiple choice with four possible answers
 const secondsPerMinute = 60; // 60 seconds in a minute
+const leadingZero = "0"; // used to pad timer seconds to ensure two digit seconds value
+const ten = 10; // used to check if leading zero is required
 
 // global variables
 var timeRemaining = 0;
+var quizComplete = false;
+var questionNumber = 0;
 
 
 function startTimer() {
   timeRemaining = quizDuration;
+  updateTimer();
+
+  var timerInterval = setInterval(function() {
+    
+    if (quizComplete === true) {
+      clearInterval(timerInterval);
+    }
+
+    timeRemaining--;
+    if (timeRemaining >=0 && quizComplete === false) {
+      updateTimer();
+    }
+
+    if (timeRemaining <= 30) {
+      // COLOR TIMER RED
+    }
+
+    if (timeRemaining <= 10) {
+      // FLASHING RED BORDER AROUND QUESTION BOX
+    }
+
+    if (timeRemaining <= 0) {
+      clearInterval(timerInterval);
+      doneMode();
+    }
+
+  }, 1000);
 
 }
 
@@ -44,13 +81,18 @@ function minutesRemaining() {
 
 function secondsRemaining() {
   var seconds = timeRemaining % secondsPerMinute; // % is the remainder operator
+  // need seconds to always be two digits for the timer
+  // add a leading zero if seconds < 10
+  // if (toString(seconds).split("").length === 1) { // more complicated method without hardcoding a number
+  if (seconds < ten) {
+    seconds = leadingZero + seconds;
+  }
   return seconds;
 }
 
 function updateTimer() {
-  minutesSpan.textContent = toString(minutesRemaining());
-  // add a leading zero if necessary to ensure double-digit seconds in the timer
-  secondsSpan.textContent = toString(secondsRemaining()).padStart(2, "0");
+  minutesSpan.textContent = minutesRemaining();
+  secondsSpan.textContent = secondsRemaining();
 }
 
 // function from project word-guess with Steve Sills
@@ -108,6 +150,17 @@ function correctResponse() {
 
 }
 
+function nextQuestion() {
+  questionNumber++;
+  
+  if (questionNumber > NUMBER_OF_QUESTIONS) {
+    endQuiz();
+  }
+
+  // DISPLAY QUESTION NUMBER questionNumber
+  
+}
+
 // event listeners
 showScoresButton.addEventListener("click", function() {
   scoresMode();
@@ -118,19 +171,19 @@ startButton.addEventListener("click", function() {
 });
 
 response1Button.addEventListener("click", function() {
-  endQuiz();
+  endQuiz(); // TEMP FOR DEV
 });
 
 response2Button.addEventListener("click", function() {
-  endQuiz();
+  endQuiz(); // TEMP FOR DEV
 });
 
 response3Button.addEventListener("click", function() {
-  endQuiz();
+  endQuiz(); // TEMP FOR DEV
 });
 
 response4Button.addEventListener("click", function() {
-  endQuiz();
+  endQuiz(); // TEMP FOR DEV
 });
 
 submitButton.addEventListener("click", function() {
@@ -151,9 +204,13 @@ function goBackHome() {
 
 function startQuiz() {
   quizMode();
+  startTimer();
+  questionNumber = 0;
+  nextQuestion();
 }
 
 function endQuiz() {
+  quizComplete = true;
   doneMode();
 }
 
