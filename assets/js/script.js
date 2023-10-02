@@ -30,7 +30,7 @@ let initialsInput = document.getElementById("initials-input");
 let resultMessageEl = document.getElementById("result-message");
 
 // global constants
-const quizDuration = 63; // quiz duration in seconds
+const quizDuration = 33; // quiz duration in seconds
 const penalty = 10; // seconds removed from timer for each incorrect response
 const secondsPerMinute = 60; // 60 seconds in a minute
 const leadingZero = "0"; // used to pad timer seconds to ensure two digit seconds value
@@ -45,7 +45,7 @@ const correct = "Correct!";
 const wrong = "Wrong!";
 
 const themeRed = "#de2626";
-const themeBlue = "#1b61e4";
+const themeGreen = "#1d881d";
 
 
 // global variables
@@ -100,7 +100,7 @@ function startTimer() {
     }
 
     if (timeRemaining <= 30) {
-      // COLOR TIMER RED *****************************
+      colorElement("#timer", themeRed);
     }
 
     if (timeRemaining <= 10) {
@@ -164,8 +164,8 @@ function validateKeyPress(key) {
 
 function checkAnswer(key) {
   let responseIsCorrect = false;
-
-  if (key == questions[questionNumber].answer) {
+  let correctAnswer = questions[questionNumber].answer;
+  if (key == correctAnswer) {
     responseIsCorrect = true;
   }
   
@@ -174,8 +174,8 @@ function checkAnswer(key) {
   } else {
     incorrectResponse(key);
   }
-  // TO DO ********************************
-  // color correct response green
+  colorElement("#response" + correctAnswer, themeGreen);
+
 
 }
 
@@ -193,9 +193,10 @@ function colorElement(element, color) {
 }
 
 function resetElementColor(element) {
-  console.log("reset color");
-  document.querySelector(element).style.backgroundColor = themeBlue;
-  document.querySelector(element).style.boxShadow = "0 0 3px " + themeBlue;
+  document.querySelectorAll(element).forEach(function(item) {
+    item.style.backgroundColor = "";
+    item.style.boxShadow = "";
+  });
 }
 
 function correctResponse() {
@@ -292,6 +293,7 @@ function goHome() {
 function startQuiz() {
   quizComplete = false;
   quizMode();
+  resetElementColor("#timer");
   startTimer();
   questionNumber = 0;
   nextQuestion();
