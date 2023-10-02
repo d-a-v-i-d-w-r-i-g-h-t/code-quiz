@@ -30,7 +30,7 @@ let initialsInput = document.getElementById("initials-input");
 let resultMessageEl = document.getElementById("result-message");
 
 // global constants
-const quizDuration = 18; // quiz duration in seconds
+const quizDuration = 180; // quiz duration in seconds
 const penalty = 10; // seconds removed from timer for each incorrect response
 const secondsPerMinute = 60; // 60 seconds in a minute
 const leadingZero = "0"; // used to pad timer seconds to ensure two digit seconds value
@@ -196,24 +196,22 @@ function checkAnswer(key) {
   if (key == correctAnswer) {
     responseIsCorrect = true;
   }
-  
-  if (responseIsCorrect === true) {
-    correctResponse();
-  } else {
-    incorrectResponse(key);
-  }
+
   colorElement("#response" + correctAnswer, themeGreen);
 
+  if (responseIsCorrect === true) {
+    resultMessageEl.textContent = correct;
+  } else {
+    resultMessageEl.textContent = wrong;
 
-}
+    colorElement("#response" + key, themeRed);
 
-function incorrectResponse(key) {
-  timeRemaining -= penalty;
-  colorElement("#response" + key, themeRed);
+    timeRemaining -= penalty;
+    }
 
-  resultMessageEl.textContent = wrong;
   displayResultMessage();
 }
+
 
 function colorElement(element, color) {
   document.querySelector(element).style.backgroundColor = color;
@@ -227,18 +225,20 @@ function resetElementColor(element) {
   });
 }
 
-function correctResponse() {
-  resultMessageEl.textContent = correct;
-  displayResultMessage();
-}
-
 function displayResultMessage() {
+  // display the result message (Correct! / Wrong!) and
+  // turn off event listeners
   showElement(resultMessageEl);
+  removeQuizEventListeners();
+
+  // wait a specified time before user can proceed to the next question
+  // turn event listeners back on
   setTimeout(function(){
     hideElement(resultMessageEl);
     nextQuestion();
     resetElementColor(".button");
-  }, 1000);
+    addQuizEventListeners();
+  }, 5000);
 }
 
 function nextQuestion() {
@@ -271,22 +271,6 @@ homeButton.addEventListener("click", function() {
 
 startButton.addEventListener("click", function() {
   startQuiz();
-});
-
-response1Button.addEventListener("click", function() {
-  checkAnswer(1);
-});
-
-response2Button.addEventListener("click", function() {
-  checkAnswer(2);
-});
-
-response3Button.addEventListener("click", function() {
-  checkAnswer(3);
-});
-
-response4Button.addEventListener("click", function() {
-  checkAnswer(4);
 });
 
 initialsInputForm.addEventListener("submit", formSubmitted);
@@ -330,15 +314,49 @@ function startQuiz() {
 function addQuizEventListeners() {
   document.addEventListener("keydown", resolveKeyPress);
 
+  response1Button.addEventListener("click", function() {
+    checkAnswer(1);
+  });
+  
+  response2Button.addEventListener("click", function() {
+    checkAnswer(2);
+  });
+  
+  response3Button.addEventListener("click", function() {
+    checkAnswer(3);
+  });
+  
+  response4Button.addEventListener("click", function() {
+    checkAnswer(4);
+  });
+  
+  
 }
 
 function removeQuizEventListeners() {
   document.removeEventListener("keydown", resolveKeyPress);
 
+  response1Button.removeEventListener("click", function() {
+    checkAnswer(1);
+  });
+  
+  response2Button.removeEventListener("click", function() {
+    checkAnswer(2);
+  });
+  
+  response3Button.removeEventListener("click", function() {
+    checkAnswer(3);
+  });
+  
+  response4Button.removeEventListener("click", function() {
+    checkAnswer(4);
+  });
+  
+  
 }
 
 function endQuiz() {
-  removeQuizEventListeners());
+  removeQuizEventListeners();
 
   quizComplete = true;
   if (timeRemaining >=0) {
