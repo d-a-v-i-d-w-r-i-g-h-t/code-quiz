@@ -1,31 +1,33 @@
 // pointer variables for primary page element IDs
-var welcomeEl = document.getElementById("welcome-wrapper");
-var quizEl = document.getElementById("quiz-wrapper");
-var doneEl = document.getElementById("all-done-wrapper");
-var scoresEl = document.getElementById("high-scores-wrapper");
+let welcomeEl = document.getElementById("welcome-wrapper");
+let quizEl = document.getElementById("quiz-wrapper");
+let doneEl = document.getElementById("all-done-wrapper");
+let scoresEl = document.getElementById("high-scores-wrapper");
 
 
 // pointer variables for button elements
-var showScoresButton = document.getElementById("high-scores-button");
-var homeButton = document.getElementById("home-button");
-var startButton = document.getElementById("start-quiz-button");
-var response1Button = document.getElementById("response1");
-var response2Button = document.getElementById("response2");
-var response3Button = document.getElementById("response3");
-var response4Button = document.getElementById("response4");
-var submitButton = document.getElementById("initials-submit-button");
-var clearButton = document.getElementById("clear-high-scores");
+let showScoresButton = document.getElementById("high-scores-button");
+let homeButton = document.getElementById("home-button");
+let startButton = document.getElementById("start-quiz-button");
+let response1Button = document.getElementById("response1");
+let response2Button = document.getElementById("response2");
+let response3Button = document.getElementById("response3");
+let response4Button = document.getElementById("response4");
+let submitButton = document.getElementById("initials-submit-button");
+let clearButton = document.getElementById("clear-high-scores");
 
 // other pointer variables
-var timerEl = document.getElementById("timer");
-var minutesSpan = document.getElementById("minutes");
-var secondsSpan = document.getElementById("seconds");
-var questionEl = document.getElementById("question");
-var response1El = document.getElementById("response1");
-var response2El = document.getElementById("response2");
-var response3El = document.getElementById("response3");
-var response4El = document.getElementById("response4");
-var myScoreSpan = document.getElementById("myScore");
+let timerEl = document.getElementById("timer");
+let minutesSpan = document.getElementById("minutes");
+let secondsSpan = document.getElementById("seconds");
+let questionEl = document.getElementById("question");
+let response1El = document.getElementById("response1");
+let response2El = document.getElementById("response2");
+let response3El = document.getElementById("response3");
+let response4El = document.getElementById("response4");
+let finalScoreSpan = document.getElementById("finalScore");
+let initialsInputForm = document.getElementById("form");
+let initialsInput = document.getElementById("initials-input");
 
 // global constants
 const quizDuration = 63; // quiz duration in seconds
@@ -41,11 +43,13 @@ const three = "3. "; // prepended to response 3
 const four = "4. "; // prepended to response 4
 
 // global variables
-var timeRemaining = 0;
-var quizComplete = false;
-var questionNumber = 0;
+let timeRemaining = 0;
+let quizComplete = false;
+let questionNumber = 0;
+let numberOfHighScores = {};
+let newScore = 0;
 
-var questions = {
+let questions = {
   1: {
     question: `Arrays in JavaScript can be used to store ${blank}.`,
     response1: "numbers and strings",
@@ -72,7 +76,7 @@ var questions = {
   }
 }
 
-var highScores; // will be loaded from localStorage or initialized if not found
+let highScores; // will be loaded from localStorage or initialized if not found
 
 
 // NUMBER OF QUESTIONS
@@ -82,7 +86,7 @@ function startTimer() {
   timeRemaining = quizDuration;
   updateTimer();
 
-  var timerInterval = setInterval(function() {
+  let timerInterval = setInterval(function() {
     
     if (quizComplete === true) {
       clearInterval(timerInterval);
@@ -112,12 +116,12 @@ function startTimer() {
 
 
 function minutesRemaining() {
-  var minutes = Math.floor(timeRemaining / secondsPerMinute);
+  let minutes = Math.floor(timeRemaining / secondsPerMinute);
   return minutes;
 }
 
 function secondsRemaining() {
-  var seconds = timeRemaining % secondsPerMinute; // % is the remainder operator
+  let seconds = timeRemaining % secondsPerMinute; // % is the remainder operator
   // need seconds to always be two digits for the timer
   // add a leading zero if seconds < 10
   // if (toString(seconds).split("").length === 1) { // more complicated method without hardcoding a number
@@ -138,17 +142,16 @@ function resolveKeyPress(event) {
   validateKeyPress(keyPress);
 }
 
-// FUNCTION validateKeyPress
 // gatekeeper for keypresses
 // only valid key presses, i.e. '1', '2', '3', ... up to the number
 // of multiple choice answers will be used to check the answer
 function validateKeyPress(key) {
-  var validSelection = false
+  let validSelection = false
 
  // check if the key press is a number
  if (isNaN(key) = false) {
     // check that the key press is a number within the range of valid responses
-    for (var i = 0; i < numResponses; i++) {
+    for (let i = 0; i < numResponses; i++) {
       if (i+1 === key) {
         validSelection = true;
       }
@@ -161,7 +164,7 @@ function validateKeyPress(key) {
 }
 
 function checkAnswer(key) {
-  var responseIsCorrect = false;
+  let responseIsCorrect = false;
 
   if (key === correctAnswer) {
     responseIsCorrect = true;
@@ -172,6 +175,7 @@ function checkAnswer(key) {
   } else {
     incorrectResponse();
   }
+  // TO DO ********************************
   // color correct response green
   // pause for 1 second
 
@@ -200,6 +204,7 @@ function nextQuestion() {
 
 // event listeners
 showScoresButton.addEventListener("click", function() {
+  loadHighScores();
   scoresMode();
 });
 
@@ -228,12 +233,34 @@ response4Button.addEventListener("click", function() {
 });
 
 submitButton.addEventListener("click", function() {
-  submitInitials();
+  submitInitialsInputForm();
 });
+// submitButton.addEventListener("click", function() {
+//   submitInitials();
+// });
+
+initialsInputForm.addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  let validInput = false;
+  let newInitials = initialsInput.value;
+
+  if (newInitials.value != "") {
+    submitInitials(newInitials);
+  }
+})
 
 clearButton.addEventListener("click", function() {
   clearHighScores();
 });
+
+
+function submitInitialsInputForm() {
+  initialsInputForm.submit();
+}
+
+
+
 
 function goHome() {
   quizComplete = true;
@@ -250,32 +277,38 @@ function startQuiz() {
 
 function endQuiz() {
   quizComplete = true;
-  myScoreSpan.textContent = timeRemaining; // score is equal to time remaining
+  newScore = timeRemaining; // new score is equal to time remaining
+  finalScoreSpan.textContent = newScore; 
   doneMode();
 }
 
 function submitInitials(str) {
   loadHighScores();
-  var numberOfHighScores = Object.keys(highScores).length;
-  var newHighScore = false;
-  var currentPosition = {initials: "", score: 0};
-  var lowerPosition = {initials: "", score: 0};
+  numberOfHighScores = Object.keys(highScores).length;
+  let newScoreIsHighScore = false;
+  let currentPosition = {initials: "", score: 0};
+  let lowerPosition = {initials: "", score: 0};
 
-  for (i = 0; i < numberOfHighScores; i++) {
+  // starting for loop at 1 because this is referencing high score postions 1-10 rather than a zero-indexed array
+  for (let i = 1; i <= numberOfHighScores; i++) {
+
     // check to see if the new score is higher than one of the current saved high scores
-    if (timeRemaining > highScores.[i+1].score) {
-      newHighScore = true;
+    if (newScore > highScores[i].score && newScoreIsHighScore === false) {
+      newScoreIsHighScore = true;
       currentPosition.initials = str;
-      currentPosition.score = timeRemaining;
+      currentPosition.score = newScore;
     }
     // if we're inserting a new score, we have to move the existing scores down
-    if (newHighScore === true) {
+    if (newScoreIsHighScore === true) {
+
       // save the score at this position in lowerPosition
-      lowerPosition.initials = highScores.[i+1].initials;
-      lowerPosition.score = highScores.[i+1].score;
+      lowerPosition.initials = highScores[i].initials;
+      lowerPosition.score = highScores[i].score;
+
       // save the score being inserted into highScores
-      highScores.[i+1].initials = currentPosition.initials;
-      highScores.[i+1].score = currentPosition.score;
+      highScores[i].initials = currentPosition.initials;
+      highScores[i].score = currentPosition.score;
+
       // copy the score saved in lowerPosition into currentPosition
       // it will be put in the next position down on the next for-loop iteration
       // if we're already at the bottom of the list, it doesn't go anywhere
@@ -289,12 +322,22 @@ function submitInitials(str) {
 
 function loadHighScores() {
   highScores = JSON.parse(localStorage.getItem("highScoresStringify"));
+  
   // if high scores aren't saved in local storage, initialize the object variable
   if (!highScores) {
     initializeHighScores();
   }
   updateHighScores();
 }
+
+function updateHighScores() {
+  numberOfHighScores = Object.keys(highScores).length;
+  for (let i = 1; i <= numberOfHighScores; i++) {
+    document.getElementById("initials" + i).textContent = highScores[i].initials;
+    document.getElementById("score" + i).textContent = highScores[i].score;
+  }
+}
+
 
 function saveHighScores() {
   updateHighScores();
