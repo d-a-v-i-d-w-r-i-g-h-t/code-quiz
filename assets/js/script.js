@@ -18,6 +18,8 @@ var clearButton = document.getElementById("clear-high-scores");
 
 // other pointer variables
 var timerEl = document.getElementById("timer");
+var minutesSpan = document.getElementById("minutes");
+var secondsSpan = document.getElementById("seconds");
 
 // global constants
 const quizDuration = 90; // quiz duration in seconds
@@ -34,9 +36,21 @@ function startTimer() {
 
 }
 
+
 function minutesRemaining() {
-  var minutes = 0;
   var minutes = Math.floor(timeRemaining / secondsPerMinute);
+  return minutes;
+}
+
+function secondsRemaining() {
+  var seconds = timeRemaining % secondsPerMinute; // % is the remainder operator
+  return seconds;
+}
+
+function updateTimer() {
+  minutesSpan.textContent = toString(minutesRemaining());
+  // add a leading zero if necessary to ensure double-digit seconds in the timer
+  secondsSpan.textContent = toString(secondsRemaining()).padStart(2, "0");
 }
 
 // function from project word-guess with Steve Sills
