@@ -3,6 +3,8 @@
   --medium: hsl(219, 79%, 60%);
   --dark: hsl(219, 79%, 50%);
 
+  --green: green;
+
   /* greens, reds for changing answer buttons, timer */
 }
 
@@ -36,6 +38,8 @@ header {
   border-radius: 5px;
   background-color: var(--dark);
   box-shadow: 0 0 3px var(--dark);
+  /* background-color: #de2626;
+  box-shadow: 0 0 5px #de2626; */
 }
 
 .button:hover {
@@ -100,6 +104,7 @@ changed in javascript to display:block when required */
   border-top: solid;
   border-width: 1px;
   border-color: var(--light);
+  display: none;
 }
 
 

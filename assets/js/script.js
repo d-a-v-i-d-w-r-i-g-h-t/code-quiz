@@ -27,6 +27,7 @@ let response4El = document.getElementById("response4");
 let finalScoreSpan = document.getElementById("finalScore");
 let initialsInputForm = document.getElementById("form");
 let initialsInput = document.getElementById("initials-input");
+let resultMessageEl = document.getElementById("result-message");
 
 // global constants
 const quizDuration = 63; // quiz duration in seconds
@@ -40,6 +41,12 @@ const one = "1. "; // prepended to response 1
 const two = "2. "; // prepended to response 2
 const three = "3. "; // prepended to response 3
 const four = "4. "; // prepended to response 4
+const correct = "Correct!";
+const wrong = "Wrong!";
+
+const themeRed = "#de2626";
+const themeBlue = "#1b61e4";
+
 
 // global variables
 let timeRemaining = 0;
@@ -47,7 +54,7 @@ let quizComplete = false;
 let questionNumber = 0;
 let numberOfHighScores = {};
 let newScore = 0;
-
+let highScores; // will be loaded from localStorage or initialized if not found
 let questions = {
   1: {
     question: `Arrays in JavaScript can be used to store ${blank}.`,
@@ -73,13 +80,9 @@ let questions = {
     response4: "all of the above",
     answer: 4
   }
-}
-
-let highScores; // will be loaded from localStorage or initialized if not found
+};
 
 
-// NUMBER OF QUESTIONS
-// console.log(Object.keys(questions).length);
 
 function startTimer() {
   timeRemaining = quizDuration;
@@ -97,11 +100,11 @@ function startTimer() {
     }
 
     if (timeRemaining <= 30) {
-      // COLOR TIMER RED
+      // COLOR TIMER RED *****************************
     }
 
     if (timeRemaining <= 10) {
-      // FLASHING RED BORDER AROUND QUESTION BOX
+      // FLASHING RED BORDER AROUND QUESTION BOX ****************************
     }
 
     if (timeRemaining <= 0) {
@@ -147,13 +150,10 @@ function resolveKeyPress(event) {
 function validateKeyPress(key) {
   let validSelection = false
 
- // check if the key press is a number
- if (isNaN(key) = false) {
-    // check that the key press is a number within the range of valid responses
-    for (let i = 0; i < numResponses; i++) {
-      if (i+1 === key) {
-        validSelection = true;
-      }
+  // check that the key press is a number within the range of valid responses
+  for (let i = 0; i < numResponses; i++) {
+    if (i+1 == key) {
+      validSelection = true;
     }
   }
   
@@ -165,40 +165,69 @@ function validateKeyPress(key) {
 function checkAnswer(key) {
   let responseIsCorrect = false;
 
-  if (key === correctAnswer) {
+  if (key == questions[questionNumber].answer) {
     responseIsCorrect = true;
   }
   
   if (responseIsCorrect === true) {
     correctResponse();
   } else {
-    incorrectResponse();
+    incorrectResponse(key);
   }
   // TO DO ********************************
   // color correct response green
-  // pause for 1 second
 
-  nextQuestion();
 }
 
-function incorrectResponse() {
+function incorrectResponse(key) {
   timeRemaining -= penalty;
-  // color selected response button red,
+  colorElement("#response" + key, themeRed);
+
+  resultMessageEl.textContent = wrong;
+  displayResultMessage();
+}
+
+function colorElement(element, color) {
+  document.querySelector(element).style.backgroundColor = color;
+  document.querySelector(element).style.boxShadow = "0 0 5px " + color;
+}
+
+function resetElementColor(element) {
+  console.log("reset color");
+  document.querySelector(element).style.backgroundColor = themeBlue;
+  document.querySelector(element).style.boxShadow = "0 0 3px " + themeBlue;
 }
 
 function correctResponse() {
+  resultMessageEl.textContent = correct;
+  displayResultMessage();
+}
 
+function displayResultMessage() {
+  showElement(resultMessageEl);
+  setTimeout(function(){
+    hideElement(resultMessageEl);
+    nextQuestion();
+    resetElementColor(".button");
+  }, 1000);
 }
 
 function nextQuestion() {
   questionNumber++;
   
-  if (questionNumber > ten) {
-    endQuiz(); // HOW MANY QUESTIONS? GET THIS FROM THE QUESTION OBJECT VAR
-  }
 
-  // DISPLAY QUESTION NUMBER questionNumber
-  
+  let numberOfQuestions = Object.keys(questions).length;
+
+  if (questionNumber > numberOfQuestions) {
+    endQuiz();
+  } else {
+    // update question and response text
+    questionEl.textContent = questions[questionNumber].question;
+    response1.textContent = one + questions[questionNumber].response1;
+    response2.textContent = two + questions[questionNumber].response2;
+    response3.textContent = three + questions[questionNumber].response3;
+    response4.textContent = four + questions[questionNumber].response4;
+  }
 }
 
 // event listeners
@@ -216,52 +245,42 @@ startButton.addEventListener("click", function() {
 });
 
 response1Button.addEventListener("click", function() {
-  endQuiz(); // TEMP FOR DEV
+  checkAnswer(1);
 });
 
 response2Button.addEventListener("click", function() {
-  endQuiz(); // TEMP FOR DEV
+  checkAnswer(2);
 });
 
 response3Button.addEventListener("click", function() {
-  endQuiz(); // TEMP FOR DEV
+  checkAnswer(3);
 });
 
 response4Button.addEventListener("click", function() {
-  endQuiz(); // TEMP FOR DEV
+  checkAnswer(4);
 });
 
 initialsInputForm.addEventListener("submit", formSubmitted);
-
-// initialsInputForm.addEventListener("submit", function(event) {
-//   event.preventDefault();
-
-//   console.log("form submit event listener activated");
-//   let validInput = false;
-//   let newInitials = initialsInput.value;
-//   console.log("new initials: " + newInitials);
-
-//   if (newInitials.value != "") {
-//     submitInitials(newInitials);
-//   }
-// });
-function formSubmitted(event) {
-  event.preventDefault();
-
-  console.log("form submit event listener activated");
-  let validInput = false;
-  let newInitials = initialsInput.value;
-  console.log("new initials: " + newInitials);
-
-  if (newInitials != "" && newInitials.length <= 5) {
-    submitInitials(newInitials);
-  }
-}
 
 clearButton.addEventListener("click", function() {
   clearHighScores();
 });
 
+
+function formSubmitted(event) {
+  event.preventDefault();
+
+  let validInput = false;
+
+  // take first three characters of input string, make all caps
+  let newInitials = initialsInput.value.slice(0,3).toUpperCase();
+
+  // proceed if input is not blank
+  if (newInitials != "") {
+    submitInitials(newInitials);
+    initialsInput.value = ""; // reset form
+  }
+}
 
 
 
@@ -276,11 +295,19 @@ function startQuiz() {
   startTimer();
   questionNumber = 0;
   nextQuestion();
+
+  document.addEventListener("keydown", resolveKeyPress);
 }
 
 function endQuiz() {
+  document.removeEventListener("keydown", resolveKeyPress);
+
   quizComplete = true;
-  newScore = timeRemaining; // new score is equal to time remaining
+  if (timeRemaining >=0) {
+    newScore = timeRemaining; // new score is equal to time remaining
+  } else {
+    newScore = 0; // to prevent negative scores
+  }
   finalScoreSpan.textContent = newScore; 
   doneMode();
 }
@@ -353,34 +380,34 @@ function clearHighScores() {
 }
 
 // FOR TESTING
-function initializeHighScores() {
-  highScores = {
-    1: {initials: "DSW", score: 58},
-    2: {initials: "KCW", score: 56},
-    3: {initials: "GTW", score: 52},
-    4: {initials: "JAZ", score: 46},
-    5: {initials: "IMW", score: 41},
-    6: {initials: "MSW", score: 38},
-    7: {initials: "PWM", score: 31},
-    8: {initials: "GWM", score: 22},
-    9: {initials: "RJM", score: 13},
-    10: {initials: "PMW", score: 7}
-  };
-}
 // function initializeHighScores() {
 //   highScores = {
-//     1: {initials: "", score: ""},
-//     2: {initials: "", score: ""},
-//     3: {initials: "", score: ""},
-//     4: {initials: "", score: ""},
-//     5: {initials: "", score: ""},
-//     6: {initials: "", score: ""},
-//     7: {initials: "", score: ""},
-//     8: {initials: "", score: ""},
-//     9: {initials: "", score: ""},
-//     10: {initials: "", score: ""}
+//     1: {initials: "DSW", score: 58},
+//     2: {initials: "KCW", score: 56},
+//     3: {initials: "GTW", score: 52},
+//     4: {initials: "JAZ", score: 46},
+//     5: {initials: "IMW", score: 41},
+//     6: {initials: "MSW", score: 38},
+//     7: {initials: "PWM", score: 31},
+//     8: {initials: "GWM", score: 22},
+//     9: {initials: "RJM", score: 13},
+//     10: {initials: "PMW", score: 7}
 //   };
 // }
+function initializeHighScores() {
+  highScores = {
+    1: {initials: "", score: ""},
+    2: {initials: "", score: ""},
+    3: {initials: "", score: ""},
+    4: {initials: "", score: ""},
+    5: {initials: "", score: ""},
+    6: {initials: "", score: ""},
+    7: {initials: "", score: ""},
+    8: {initials: "", score: ""},
+    9: {initials: "", score: ""},
+    10: {initials: "", score: ""}
+  };
+}
 
 
 // mode functions display:block one of the four primary wrapper-enclosed elements:
