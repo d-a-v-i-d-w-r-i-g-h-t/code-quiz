@@ -168,6 +168,7 @@ function updateTimer() {
 // function from project word-guess with Steve Sills
 function resolveKeyPress(event) {
   keyPress = event.key;
+  console.log(keyPress);
   validateKeyPress(keyPress);
 }
 
@@ -323,11 +324,21 @@ function startQuiz() {
   questionNumber = 0;
   nextQuestion();
 
+  addQuizEventListeners();
+}
+
+function addQuizEventListeners() {
   document.addEventListener("keydown", resolveKeyPress);
+
+}
+
+function removeQuizEventListeners() {
+  document.removeEventListener("keydown", resolveKeyPress);
+
 }
 
 function endQuiz() {
-  document.removeEventListener("keydown", resolveKeyPress);
+  removeQuizEventListeners());
 
   quizComplete = true;
   if (timeRemaining >=0) {
