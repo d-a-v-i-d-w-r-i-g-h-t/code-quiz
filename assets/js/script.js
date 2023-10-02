@@ -254,12 +254,36 @@ function endQuiz() {
   doneMode();
 }
 
-function submitInitials() {
-  // retrieve score object variable from localStorage
-  // (maybe do this page loads?)
-  // add score to score object variable
-  // save score object variable to localStorage
-  // display high score table
+function submitInitials(str) {
+  loadHighScores();
+  var numberOfHighScores = Object.keys(highScores).length;
+  var newHighScore = false;
+  var currentPosition = {initials: "", score: 0};
+  var lowerPosition = {initials: "", score: 0};
+
+  for (i = 0; i < numberOfHighScores; i++) {
+    // check to see if the new score is higher than one of the current saved high scores
+    if (timeRemaining > highScores.[i+1].score) {
+      newHighScore = true;
+      currentPosition.initials = str;
+      currentPosition.score = timeRemaining;
+    }
+    // if we're inserting a new score, we have to move the existing scores down
+    if (newHighScore === true) {
+      // save the score at this position in lowerPosition
+      lowerPosition.initials = highScores.[i+1].initials;
+      lowerPosition.score = highScores.[i+1].score;
+      // save the score being inserted into highScores
+      highScores.[i+1].initials = currentPosition.initials;
+      highScores.[i+1].score = currentPosition.score;
+      // copy the score saved in lowerPosition into currentPosition
+      // it will be put in the next position down on the next for-loop iteration
+      // if we're already at the bottom of the list, it doesn't go anywhere
+      currentPosition.initials = lowerPosition.initials;
+      currentPosition.score = lowerPosition.score;
+    }
+  }
+  saveHighScores();
   scoresMode();
 }
 
