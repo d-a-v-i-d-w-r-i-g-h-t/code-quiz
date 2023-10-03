@@ -1,3 +1,4 @@
+/* root contains variables for use with desired selectors */
 :root {
   --light: hsl(219, 79%, 90%);
   --medium: hsl(219, 79%, 60%);
@@ -8,6 +9,8 @@
   /* greens, reds for changing answer buttons, timer */
 }
 
+/* universal selector, plus universal selector with ::before and ::after pseudo-elements,
+necessary because box-sizing is not inherited */
 *,
 *::before,
 *::after {
@@ -17,18 +20,18 @@
   font-family: Arial, Helvetica, sans-serif
 }
 
-
+/* element selector for h1 elements */
 h1 {
   text-align: center;
 }
 
-
+/* element selector for header element, setting up the grid */
 header {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
 
-
+/* class, id, and element selectors for class button, id timer, and element button */
 .button, #timer, button {
   color: white;
   font-weight: bold;
@@ -41,22 +44,27 @@ header {
   transition: background-color 0.1s, box-shadow 0.3s;
 }
 
+/* additional formatting to be applied on hover to the button class and button element */
 .button:hover, button:hover {
   background-color: var(--medium);
   box-shadow: 0 0 10px var(--dark);
   cursor: pointer;
 }
 
-
+/* id selector with grid display formatting */
 #high-scores-button {
   justify-self: start
 }
 
+/* id selector with grid display formatting */
+/* this section is display:none by default,
+changed in javascript to display:block when required */
 #home-button {
   justify-self: start;
   display: none;
 }
 
+/* id selector with grid display formatting */
 /* this section is display:none by default,
 changed in javascript to display:block when required */
 #timer {
@@ -66,7 +74,7 @@ changed in javascript to display:block when required */
   display: none;
 }
 
-
+/* id selector for the first of four primary page sections */
 #welcome-wrapper {
   margin: 100px auto;
   max-width: 600px;
@@ -75,11 +83,12 @@ changed in javascript to display:block when required */
   display: block;
 }
 
+/* id selector */
 #start-quiz-button {
   margin: 10px auto;
 }
 
-
+/* id selector for the second of four primary page sections */
 /* this section is display:none by default,
 changed in javascript to display:block when required */
 #quiz-wrapper {
@@ -95,15 +104,16 @@ changed in javascript to display:block when required */
   border-radius: 20px;
   transition: border-color 0.3s, box-shadow 0.5s;
 }
-/* this is the styling for when there's 10 seconds left */
-#quiz-wrapper {
-  /* border-color: var(--themeRed); */
-}
 
+
+/* id selector */
 #question {
   margin-left: 10px;
 }
 
+/* id selector */
+/* this section is display:none by default,
+changed in javascript to display:block when required */
 #result-message {
   font-style: italic;
   font-size: 120%;
@@ -117,6 +127,7 @@ changed in javascript to display:block when required */
 }
 
 
+/* id selector for the third of four primary page sections */
 /* this section is display:none by default,
 changed in javascript to display:block when required */
 #all-done-wrapper {
@@ -127,6 +138,7 @@ changed in javascript to display:block when required */
 }
 
 
+/* id selector */
 #initials-input {
   margin-top: 12px;
   margin-bottom: 12px;
@@ -134,10 +146,13 @@ changed in javascript to display:block when required */
   text-align: center;
 }
 
+/* element selector for the entry form, creating
+a flexbox container for its children */
 form {
   display: flex;
 }
 
+/* id selector for the fourth of four primary page sections */
 /* this section is display:none by default,
 changed in javascript to display:block when required */
 #high-scores-wrapper {
@@ -146,6 +161,8 @@ changed in javascript to display:block when required */
   display: none;
 }
 
+/* id selector setting up a three-column grid container, 
+this time for the high score list */
 #high-scores-grid-container {
   display: grid;
   grid-template-columns: repeat(3, 100px);
@@ -154,24 +171,28 @@ changed in javascript to display:block when required */
   margin-bottom: 10px;
 }
 
+/* class selector for the left column grid item */
 .position {
   text-align: right;
   padding: 5px 22px 5px 20px;
   border-top-left-radius: 20px;
 }
 
+/* class selector for the center column grid item */
 .initials {
   text-align: center;
   padding-top: 5px;
   padding-bottom: 5px;
 }
 
+/* class selector for the right column grid item */
 .score {
   text-align: right;
   padding: 5px 55px 5px 0;
   border-bottom-right-radius: 20px;
 }
 
+/* multiple class selector for some shared formatting */
 .position,
 .initials,
 .score {
@@ -179,6 +200,7 @@ changed in javascript to display:block when required */
   box-shadow: 0 0 3px var(--light);
 }
 
+/* id selector */
 #clear-high-scores {
   margin: 20px auto;
 }
