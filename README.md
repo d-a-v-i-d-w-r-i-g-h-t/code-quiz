@@ -36,6 +36,8 @@ On clicking the **Start Quiz** button, the user is presented with a series of mu
 
 Upon selecting a correct answer, the answer is highlighted in green and a *Correct!* message is displayed under the question. If the selected answer is incorrect, the selected answer is highlighed in red, the correct answer is highlighted in green, and a *Wrong!* message is displayed under the question. The next question is then displayed after a brief delay.
 
+50 questions are presented in a random order on the topics of HTML, CSS, and Javascript. The user is given six minutes to complete the quiz.
+
 In the quiz view, a countdown timer is displayed in the top right showing minutes and seconds remaining, and wrong answers are penalized with the subtraction of ten seconds. The button in the top left now says **Home** and will take the user back to the welcome page if desired.
 
 At 30 seconds remaining, the timer turns red. At 15 seconds remaining, a glowing red border around the questions begins flashing. When all questions are answered or when time runs out, the quiz ends.

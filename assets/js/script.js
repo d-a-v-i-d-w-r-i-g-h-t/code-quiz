@@ -207,12 +207,12 @@ let questions = {
     answer: 1
   },
   19: {
-    question: "What is the purpose of the 'localStorage' object in JavaScript?",
-    response1: "To store data permanently on the server",
-    response2: "To store data temporarily on the client's browser",
-    response3: "To store data in cookies",
-    response4: "To store data in a database",
-    answer: 2
+    question: "What does the acronym 'API' stand for in web development?",
+    response1: "Application Programming Interface",
+    response2: "Advanced Programming Interface",
+    response3: "Automated Programming Interface",
+    response4: "Application Process Interface",
+    answer: 1
   },
   20: {
     question: "Which event is triggered when a user clicks on an HTML element?",
@@ -498,8 +498,8 @@ function startQuiz() {
   quizMode();
   resetElementColor("#timer");
   startTimer();
-  questionListNumber = 0;
-  // getRandomizedQuestionList()
+  createRandomizedQuestionList()
+  questionListNumber = -1;
   nextQuestion();
 
   addQuizEventListeners();
@@ -537,9 +537,6 @@ function removeQuizEventListeners() {
   });
 }
 
-function handleResponseClick() {
-  
-}
 
 
   //-----------------------------//
@@ -601,7 +598,7 @@ function startTimer() {
 //-----------------------------//
 
 function nextQuestion() {
-    questionListNumber++;
+  questionListNumber++;
   
   let numberOfQuestions = Object.keys(questions).length;
 
@@ -609,8 +606,8 @@ function nextQuestion() {
     endQuiz();
   } else {
     // update question and response text
-    // let index = randomizedQuestionList[questionListNumber];
-    let index = questionListNumber;
+    let index = randomizedQuestionList[questionListNumber];
+    // let index = questionListNumber;
 
     questionEl.textContent = questions[index].question;
     response1.textContent = one + questions[index].response1;
@@ -628,8 +625,8 @@ function nextQuestion() {
 
 function checkAnswer(key) {
   let responseIsCorrect = false;
-  // let index = randomizedQuestionList[questionListNumber]
-  let index = questionListNumber;
+  let index = randomizedQuestionList[questionListNumber]
+  // let index = questionListNumber;
   let correctAnswer = questions[index].answer;
   if (key == correctAnswer) {
     responseIsCorrect = true;
@@ -666,50 +663,35 @@ function displayResultMessage() {
     nextQuestion();
     resetElementColor(".button");
   }, 500);
-
 }
 
 
 
-  //--------------------------------------//
- //  Function: getRandomizedQuestionList  //
-//--------------------------------------//
+  //------------------------------------------//
+ //  Function: createRandomizedQuestionList  //
+//------------------------------------------//
 
-// function getRandomizedQuestionList() {
-//   let numberOfQuestions = Object.keys(questions).length;
-//   let list = [];
+function createRandomizedQuestionList() {
+  let numberOfQuestions = Object.keys(questions).length;
+  let list = [];
 
-//   // create ordered list
-//   for (let i = 0; i < numberOfQuestions; i++) {
-//     list[i] = i+1; // array is zero-based while question list is 1-based
-//   }
-//   console.log(list);
-//   randomizedQuestionList = [];
-//   for (i = 0; i < list.length; i++) {
-//     randomItem = getRandomItem(list);
-//     randomizedQuestionList.push(randomItem);
-//     // remove the "used" item from the input list so each question number is only used once
-//     list = list.splice(list.indexOf(randomItem),1);
-//   }
-//   console.log(randomizedQuestionList);
-// }
-
-// function getRandomItem(inputArray) {
-//   var randomIndex = Math.floor(Math.random() * inputArray.length);
-//   var randomListItem = inputArray[randomIndex];
-//   return randomListItem;
-// }
-
-
-function colorQuizBorder(color) {
-  quizEl.style.borderColor = color;
-  quizEl.style.boxShadow = "0 0 10px 2px " + color + ", inset 0 0 10px 2px " + color;
+  // create ordered list
+  for (let i = 0; i < numberOfQuestions; i++) {
+    list[i] = i+1; // array is zero-based while question list is 1-based
+  }
+  randomizedQuestionList = [];
+  for (i = 0; i < numberOfQuestions; i++) {
+    randomItem = getRandomItem(list);
+    randomizedQuestionList.push(randomItem);
+    // remove the "used" item from the input list so each question number is only used once
+    list.splice(list.indexOf(randomItem),1);
+  }
 }
 
-function resetQuizBorder() {
-  quizEl.style.borderColor = "";
-  quizEl.style.boxShadow = "";
-  quizEl.style.transition = "border-color 0.5s, box-shadow 0.3s";
+function getRandomItem(inputArray) {
+  var randomIndex = Math.floor(Math.random() * inputArray.length);
+  var randomListItem = inputArray[randomIndex];
+  return randomListItem;
 }
 
 
@@ -764,6 +746,10 @@ function resolveKeyPress(event) {
 
 
 
+  //-----------------------//
+ //  Style mod functions  //
+//-----------------------//
+
 function colorElement(element, color) {
   document.querySelector(element).style.backgroundColor = color;
   document.querySelector(element).style.boxShadow = "0 0 5px " + color;
@@ -775,6 +761,20 @@ function resetElementColor(element) {
     item.style.boxShadow = "";
   });
 }
+
+function colorQuizBorder(color) {
+  quizEl.style.borderColor = color;
+  quizEl.style.boxShadow = "0 0 10px 2px " + color + ", inset 0 0 10px 2px " + color;
+}
+
+function resetQuizBorder() {
+  quizEl.style.borderColor = "";
+  quizEl.style.boxShadow = "";
+  quizEl.style.transition = "border-color 0.5s, box-shadow 0.3s";
+}
+
+
+
 
 
 function formSubmitted(event) {
