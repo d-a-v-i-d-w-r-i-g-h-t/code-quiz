@@ -613,10 +613,10 @@ function startTimer() {
 //-----------------------------//
 
 function nextQuestion() {
-  if (questionAnswered === true) {
+  // if (questionAnswered === true) {
     questionListNumber++;
-  }
-  questionAnswered = false;
+  // }
+  // questionAnswered = false;
   
   // console.log("question number: " + questionListNumber);
 
