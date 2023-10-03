@@ -30,7 +30,7 @@ let initialsInput = document.getElementById("initials-input");
 let resultMessageEl = document.getElementById("result-message");
 
 // global constants
-const quizDuration = 180; // quiz duration in seconds
+const quizDuration = 360; // quiz duration in seconds
 const penalty = 10; // seconds removed from timer for each incorrect response
 const secondsPerMinute = 60; // 60 seconds in a minute
 const leadingZero = "0"; // used to pad timer seconds to ensure two digit seconds value
@@ -47,10 +47,6 @@ const wrong = "Wrong!";
 const themeRed = "#de2626";
 const themeGreen = "#1d881d";
 
-// **************************
-// ADD DIVS FOR HIGH SCORES RATHER THAN ALWAYS SHOWING ALL OF THEM
-// **************************
-
 // global variables
 let timeRemaining = 0;
 let quizComplete = false;
@@ -59,8 +55,6 @@ let randomizedQuestionList = [];
 let numberOfHighScores = {};
 let newScore = 0;
 let highScores; // will be loaded from localStorage or initialized if not found
-let questionAnswered = false;
-
 
 
   //------------------------------//
@@ -521,13 +515,7 @@ function addQuizEventListeners() {
   quizEl.addEventListener("click", function(event) {
     var element = event.target;
 
-    // console.log("I was clicked");
-    // console.log("element: ", element)
-    // console.log('element.matches("h2"): ', element.matches("h2"));
-    // console.log('element.matches(".response"): ', element.matches(".response"));
-
     if (element.matches(".response")) {
-      // console.log(element.getAttribute("data-index"));
       checkAnswer(element.getAttribute("data-index"));
     }
   });
@@ -613,17 +601,9 @@ function startTimer() {
 //-----------------------------//
 
 function nextQuestion() {
-  // if (questionAnswered === true) {
     questionListNumber++;
-  // }
-  // questionAnswered = false;
   
-  // console.log("question number: " + questionListNumber);
-
   let numberOfQuestions = Object.keys(questions).length;
-
-  // console.log("numberOfQuestions: "+ numberOfQuestions);
-  // console.log("time remaining: " + timeRemaining);
 
   if (questionListNumber >= numberOfQuestions) {
     endQuiz();
@@ -631,10 +611,6 @@ function nextQuestion() {
     // update question and response text
     // let index = randomizedQuestionList[questionListNumber];
     let index = questionListNumber;
-
-    // console.log(randomizedQuestionList);
-    // console.log(questionListNumber);
-    // console.log(index);
 
     questionEl.textContent = questions[index].question;
     response1.textContent = one + questions[index].response1;
@@ -651,7 +627,6 @@ function nextQuestion() {
 //-----------------------------//
 
 function checkAnswer(key) {
-  questionAnswered = true;
   let responseIsCorrect = false;
   // let index = randomizedQuestionList[questionListNumber]
   let index = questionListNumber;
@@ -683,17 +658,13 @@ function checkAnswer(key) {
 
 function displayResultMessage() {
   // display the result message (Correct! / Wrong!) and
-  // turn off event listeners
   showElement(resultMessageEl);
-  removeQuizEventListeners();
 
   // wait a specified time before user can proceed to the next question
-  // turn event listeners back on
   setTimeout(function(){
     hideElement(resultMessageEl);
     nextQuestion();
     resetElementColor(".button");
-    addQuizEventListeners();
   }, 500);
 
 }
@@ -776,7 +747,6 @@ function secondsRemaining() {
 // function from project word-guess with Steve Sills
 function resolveKeyPress(event) {
   keyPress = event.key;
-  // console.log(keyPress);
 
   let validSelection = false
 
