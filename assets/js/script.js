@@ -618,12 +618,12 @@ function nextQuestion() {
   }
   questionAnswered = false;
   
-  console.log("question number: " + questionListNumber);
+  // console.log("question number: " + questionListNumber);
 
   let numberOfQuestions = Object.keys(questions).length;
 
-  console.log("numberOfQuestions: "+ numberOfQuestions);
-  console.log("time remaining: " + timeRemaining);
+  // console.log("numberOfQuestions: "+ numberOfQuestions);
+  // console.log("time remaining: " + timeRemaining);
 
   if (questionListNumber >= numberOfQuestions) {
     endQuiz();
