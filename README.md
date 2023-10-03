@@ -48,6 +48,8 @@ I learned about using the ```forEach()``` method to modify the stile of all elem
 
 The template for this README file was provided by [edX Boot Camps](https://www.edx.org/boot-camps).
 
+The fantastic list of 50 questions, each with four multiple choice responses together with the correct answer, was provided already formatted in my designated object variable structure, by [ChatGPT-3.5](https://chat.openai.com/) from [OpenAI](https://openai.com/).
+
 
 ## License
 
