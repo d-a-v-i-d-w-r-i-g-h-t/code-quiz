@@ -36,7 +36,7 @@ On clicking the **Start Quiz** button, the user is presented with a series of mu
 
 Upon selecting a correct answer, the answer is highlighted in green and a *Correct!* message is displayed under the question. If the selected answer is incorrect, the selected answer is highlighed in red, the correct answer is highlighted in green, and a *Wrong!* message is displayed under the question. The next question is then displayed after a brief delay.
 
-50 questions are presented in a random order on the topics of HTML, CSS, and Javascript. Every question is asked once before the question list is re-randomized. The random question order and remaining question list is stored to Local Storage to be reloaded when the user returns to the page. If Local Storage is unavailable, a new randomly-ordered question list is created.
+50 questions are presented in a random order on the topics of HTML, CSS, and Javascript.
 
 In the quiz view, a countdown timer is displayed in the top right showing minutes and seconds remaining, and wrong answers are penalized with the subtraction of ten seconds. The button in the top left now says **Home** and will take the user back to the welcome page if desired.
 

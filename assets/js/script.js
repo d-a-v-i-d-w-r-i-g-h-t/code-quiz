@@ -54,7 +54,8 @@ const themeGreen = "#1d881d";
 // global variables
 let timeRemaining = 0;
 let quizComplete = false;
-let questionNumber = 0;
+let questionListNumber;
+let randomizedQuestionList = [];
 let numberOfHighScores = {};
 let newScore = 0;
 let highScores; // will be loaded from localStorage or initialized if not found
@@ -502,7 +503,8 @@ function startQuiz() {
   quizMode();
   resetElementColor("#timer");
   startTimer();
-  questionNumber = 0;
+  questionListNumber = -1;
+  getRandomizedQuestionList()
   nextQuestion();
 
   addQuizEventListeners();
@@ -610,20 +612,25 @@ function startTimer() {
 //-----------------------------//
 
 function nextQuestion() {
-  questionNumber++;
-  console.log("question number: " + questionNumber);
+  questionListNumber++;
+
+  console.log("question number: " + questionListNumber);
+
   let numberOfQuestions = Object.keys(questions).length;
+
   console.log("numberOfQuestions: "+ numberOfQuestions);
   console.log("time remaining: " + timeRemaining);
-  if (questionNumber > numberOfQuestions) {
+
+  if (questionListNumber >= numberOfQuestions) {
     endQuiz();
   } else {
     // update question and response text
-    questionEl.textContent = questions[questionNumber].question;
-    response1.textContent = one + questions[questionNumber].response1;
-    response2.textContent = two + questions[questionNumber].response2;
-    response3.textContent = three + questions[questionNumber].response3;
-    response4.textContent = four + questions[questionNumber].response4;
+    let index = randomizedQuestionList[questionListNumber]
+    questionEl.textContent = questions[index].question;
+    response1.textContent = one + questions[index].response1;
+    response2.textContent = two + questions[index].response2;
+    response3.textContent = three + questions[index].response3;
+    response4.textContent = four + questions[index].response4;
   }
 }
 
@@ -635,7 +642,8 @@ function nextQuestion() {
 
 function checkAnswer(key) {
   let responseIsCorrect = false;
-  let correctAnswer = questions[questionNumber].answer;
+  let index = randomizedQuestionList[questionListNumber]
+  let correctAnswer = questions[index].answer;
   if (key == correctAnswer) {
     responseIsCorrect = true;
   }
@@ -679,6 +687,34 @@ console.log("Display result");
 }
 
 
+
+  //--------------------------------------//
+ //  Function: getRandomizedQuestionList  //
+//--------------------------------------//
+
+function getRandomizedQuestionList() {
+  let numberOfQuestions = Object.keys(questions).length;
+  let list = [];
+
+  // create ordered list
+  for (let i = 0; i < numberOfQuestions; i++) {
+    list[i] = i+1; // array is zero-based while question list is 1-based
+  }
+  randomizedQuestionList = [];
+  for (let i = 0, i < list.length; i++) {
+    randomItem = getRandomItem(list);
+    randomizedQuestionList.push(randomItem);
+    // remove the "used" item from the input list so each question number is only used once
+    list = list.splice(list.indexOf(randomItem),1);
+  }
+}
+
+
+function getRandomItem(inputArray) {
+  var randomIndex = Math.floor(Math.random() * inputString.length);
+  var randomListItem = inputString[randomIndex];
+  return randomListItem;
+}
 
 
 function colorQuizBorder(color) {
