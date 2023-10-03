@@ -59,6 +59,7 @@ let randomizedQuestionList = [];
 let numberOfHighScores = {};
 let newScore = 0;
 let highScores; // will be loaded from localStorage or initialized if not found
+let questionAnswered = false;
 
 
 
@@ -612,8 +613,11 @@ function startTimer() {
 //-----------------------------//
 
 function nextQuestion() {
-  questionListNumber++;
-
+  if (questionAnswered === true) {
+    questionListNumber++;
+  }
+  questionAnswered = false;
+  
   console.log("question number: " + questionListNumber);
 
   let numberOfQuestions = Object.keys(questions).length;
@@ -647,6 +651,7 @@ function nextQuestion() {
 //-----------------------------//
 
 function checkAnswer(key) {
+  questionAnswered = true;
   let responseIsCorrect = false;
   // let index = randomizedQuestionList[questionListNumber]
   let index = questionListNumber;

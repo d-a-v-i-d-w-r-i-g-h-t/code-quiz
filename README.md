@@ -53,13 +53,6 @@ Upon submitting their initials, the user is then presented with the High Scores 
 
 ## Credits
 
-**List your collaborators, if any, with links to their GitHub profiles.**
-
-**If you used any third-party assets that require attribution, list the creators with links to their primary web presence in this section.**
-
-**If you followed tutorials, include links to those here as well.**
-
-
 I learned about CSS style transition effects from [W3schools](https://www.w3schools.com/), [CSS Transitions](https://www.w3schools.com/css/css3_transitions.asp).
 
 I learned about using the ```forEach()``` method to modify the stile of all elements in a class from [Borislav Hadzhiev](https://bobbyhadz.com/), [Change a Style of all Elements with a specific Class in JS
