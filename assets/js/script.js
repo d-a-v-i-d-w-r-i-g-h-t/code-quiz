@@ -31,7 +31,7 @@ let resultMessageEl = document.getElementById("result-message");
 
 // global constants
 const quizDuration = 180; // quiz duration in seconds
-const penalty = 10; // seconds removed from timer for each incorrect response
+const penalty = 0; // seconds removed from timer for each incorrect response
 const secondsPerMinute = 60; // 60 seconds in a minute
 const leadingZero = "0"; // used to pad timer seconds to ensure two digit seconds value
 const ten = 10; // used to check if leading zero is required
@@ -515,20 +515,18 @@ function startQuiz() {
 function addQuizEventListeners() {
   document.addEventListener("keydown", resolveKeyPress);
 
-  response1Button.addEventListener("click", function() {
-    checkAnswer(1);
-  });
-  
-  response2Button.addEventListener("click", function() {
-    checkAnswer(2);
-  });
-  
-  response3Button.addEventListener("click", function() {
-    checkAnswer(3);
-  });
-  
-  response4Button.addEventListener("click", function() {
-    checkAnswer(4);
+  quizEl.addEventListener("click", function(event) {
+    var element = event.target;
+
+    // console.log("I was clicked");
+    // console.log("element: ", element)
+    // console.log('element.matches("h2"): ', element.matches("h2"));
+    // console.log('element.matches(".response"): ', element.matches(".response"));
+
+    if (element.matches(".response")) {
+      // console.log(element.getAttribute("data-index"));
+      checkAnswer(element.getAttribute("data-index"));
+    }
   });
 }
 
@@ -539,23 +537,18 @@ function addQuizEventListeners() {
 function removeQuizEventListeners() {
   document.removeEventListener("keydown", resolveKeyPress);
 
-  response1Button.removeEventListener("click", function() {
-    checkAnswer(1);
-  });
-  
-  response2Button.removeEventListener("click", function() {
-    checkAnswer(2);
-  });
-  
-  response3Button.removeEventListener("click", function() {
-    checkAnswer(3);
-  });
-  
-  response4Button.removeEventListener("click", function() {
-    checkAnswer(4);
+  quizEl.addEventListener("click", function(event) {
+    var element = event.target;
+
+    if (element.matches(".response")) {
+      checkAnswer(element.getAttribute("data-index"));
+    }
   });
 }
 
+function handleResponseClick() {
+  
+}
 
 
   //-----------------------------//
@@ -573,8 +566,9 @@ function startTimer() {
       clearInterval(timerInterval);
     }
 
-    // prevents timer from updating after the quiz is complete
     timeRemaining--;
+
+    // prevents timer from updating after the quiz is complete
     if (timeRemaining >=0 && quizComplete === false) {
       updateTimer();
     }
@@ -617,9 +611,10 @@ function startTimer() {
 
 function nextQuestion() {
   questionNumber++;
-  
+  console.log("question number: " + questionNumber);
   let numberOfQuestions = Object.keys(questions).length;
-
+  console.log("numberOfQuestions: "+ numberOfQuestions);
+  console.log("time remaining: " + timeRemaining);
   if (questionNumber > numberOfQuestions) {
     endQuiz();
   } else {
@@ -671,7 +666,7 @@ function displayResultMessage() {
   // turn off event listeners
   showElement(resultMessageEl);
   removeQuizEventListeners();
-
+console.log("Display result");
   // wait a specified time before user can proceed to the next question
   // turn event listeners back on
   setTimeout(function(){
@@ -680,6 +675,7 @@ function displayResultMessage() {
     resetElementColor(".button");
     addQuizEventListeners();
   }, 500);
+
 }
 
 
