@@ -701,7 +701,7 @@ function getRandomizedQuestionList() {
     list[i] = i+1; // array is zero-based while question list is 1-based
   }
   randomizedQuestionList = [];
-  for (let i = 0, i < list.length; i++) {
+  for (i = 0; i < list.length; i++) {
     randomItem = getRandomItem(list);
     randomizedQuestionList.push(randomItem);
     // remove the "used" item from the input list so each question number is only used once
