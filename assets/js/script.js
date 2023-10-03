@@ -711,8 +711,8 @@ function getRandomizedQuestionList() {
 
 
 function getRandomItem(inputArray) {
-  var randomIndex = Math.floor(Math.random() * inputString.length);
-  var randomListItem = inputString[randomIndex];
+  var randomIndex = Math.floor(Math.random() * inputArray.length);
+  var randomListItem = inputArray[randomIndex];
   return randomListItem;
 }
 
