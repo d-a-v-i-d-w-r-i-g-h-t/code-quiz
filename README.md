@@ -25,7 +25,11 @@ N/A
 
 When the page loads, the user is presented with a welcome message and a **Start Quiz** button. There is also a button in the top left to jump straight to the High Scores page if the user desires.
 
+![Welcome Page](assets/images/welcome-page.png)
+
 On clicking the **Start Quiz** button, the user is presented with a series of multiple choice questions, one at a time. Each question has four possible answers which the user can select between with either the mouse, the four responses themselves being buttons. The user can also input their answer with the keyboard, using number keys **1**, **2**, **3**, and **4**.
+
+![alt text](assets/images/quiz-page.png)
 
 Upon selecting a correct answer, the answer is highlighted in green and a *Correct!* message is displayed under the question. If the selected answer is incorrect, the selected answer is highlighed in red, the correct answer is highlighted in green, and a *Wrong!* message is displayed under the question. The next question is then displayed.
 
@@ -35,16 +39,17 @@ A countdown timer is displayed in the top right showing minutes and seconds rema
 
 At 30 seconds remaining, the timer turns red. At 15 seconds remaining, a glowing red border around the questions begins flashing. When all questions are answered or when time runs out, the quiz ends.
 
+![alt text](assets/images/red-timer.png)
+
+![alt text](assets/images/glowing-border.png)
+
 The user is then presented with their final score, equal to the number of seconds remaining when they finished answering all the questions. An input box with a **Submit** button is available for the user to enter their intials.
+
+![alt text](assets/images/all-done.png)
 
 Upon submitting their initials, the user is then presented with the High Scores page where a list of up to ten high scores is displayed sorted from highest to lowest, including the score they just received. Scores are loaded from and saved to Local Storage and will persist between sessions. Under the list is a **Clear High Scores** button, which will empty the list and save the empty list to Local Storage. The **Home** button is again displayed in the top left.
 
-
-To add a screenshot, create an `assets/images` folder in your repository and upload your screenshot to it. Then, using the relative filepath, add it to your README using the following syntax:
-
-```md
-![alt text](assets/images/screenshot.png)
-```
+![alt text](assets/images/high-scores.png)
 
 
 ## Credits
