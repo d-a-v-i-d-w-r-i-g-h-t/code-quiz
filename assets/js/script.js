@@ -30,7 +30,7 @@ let initialsInput = document.getElementById("initials-input");
 let resultMessageEl = document.getElementById("result-message");
 
 // global constants
-const quizDuration = 180; // quiz duration in seconds
+const quizDuration = 33; // quiz duration in seconds
 const penalty = 0; // seconds removed from timer for each incorrect response
 const secondsPerMinute = 60; // 60 seconds in a minute
 const leadingZero = "0"; // used to pad timer seconds to ensure two digit seconds value
@@ -864,34 +864,34 @@ function clearHighScores() {
 }
 
 // FOR TESTING
-// function initializeHighScores() {
-//   highScores = {
-//     1: {initials: "DSW", score: 58},
-//     2: {initials: "KCW", score: 56},
-//     3: {initials: "GTW", score: 52},
-//     4: {initials: "JAZ", score: 46},
-//     5: {initials: "IMW", score: 41},
-//     6: {initials: "MSW", score: 38},
-//     7: {initials: "PWM", score: 31},
-//     8: {initials: "GWM", score: 22},
-//     9: {initials: "RJM", score: 13},
-//     10: {initials: "PMW", score: 7}
-//   };
-// }
 function initializeHighScores() {
   highScores = {
-    1: {initials: "", score: ""},
-    2: {initials: "", score: ""},
-    3: {initials: "", score: ""},
-    4: {initials: "", score: ""},
-    5: {initials: "", score: ""},
-    6: {initials: "", score: ""},
-    7: {initials: "", score: ""},
-    8: {initials: "", score: ""},
-    9: {initials: "", score: ""},
-    10: {initials: "", score: ""}
+    1: {initials: "DSW", score: 58},
+    2: {initials: "KCW", score: 56},
+    3: {initials: "GTW", score: 52},
+    4: {initials: "JAZ", score: 46},
+    5: {initials: "IMW", score: 41},
+    6: {initials: "MSW", score: 38},
+    7: {initials: "PWM", score: 31},
+    8: {initials: "GWM", score: 22},
+    9: {initials: "RJM", score: 13},
+    10: {initials: "PMW", score: 7}
   };
 }
+// function initializeHighScores() {
+//   highScores = {
+//     1: {initials: "", score: ""},
+//     2: {initials: "", score: ""},
+//     3: {initials: "", score: ""},
+//     4: {initials: "", score: ""},
+//     5: {initials: "", score: ""},
+//     6: {initials: "", score: ""},
+//     7: {initials: "", score: ""},
+//     8: {initials: "", score: ""},
+//     9: {initials: "", score: ""},
+//     10: {initials: "", score: ""}
+//   };
+// }
 
 
 
