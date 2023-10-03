@@ -58,30 +58,412 @@ let questionNumber = 0;
 let numberOfHighScores = {};
 let newScore = 0;
 let highScores; // will be loaded from localStorage or initialized if not found
+
+
+
+  //------------------------------//
+ //  Object variable: questions  //
+//------------------------------//
+
 let questions = {
   1: {
-    question: `Arrays in JavaScript can be used to store ${blank}.`,
-    response1: "numbers and strings",
-    response2: "other arrays",
-    response3: "booleans",
-    response4: "all of the above",
-    answer: 4
+    question: "What does HTML stand for?",
+    response1: "Hyper Text Markup Language",
+    response2: "Hyperlinks and Text Markup Language",
+    response3: "Home Tool Markup Language",
+    response4: "Hyper Transfer Markup Language",
+    answer: 1
   },
   2: {
-    question: `Question 2 ${blank}.`,
-    response1: "numbers and strings",
-    response2: "other arrays",
-    response3: "booleans",
-    response4: "all of the above",
-    answer: 4
+    question: "Which tag is used to create a hyperlink in HTML?",
+    response1: "<a>",
+    response2: "<link>",
+    response3: "<href>",
+    response4: "<hlink>",
+    answer: 1
   },
   3: {
-    question: `Question 3 ${blank}.`,
-    response1: "numbers and strings",
-    response2: "other arrays",
-    response3: "booleans",
-    response4: "all of the above",
+    question: "In CSS, what property is used to control the size of text?",
+    response1: "font-size",
+    response2: "text-size",
+    response3: "letter-spacing",
+    response4: "line-height",
+    answer: 1
+  },
+  4: {
+    question: "What is the purpose of JavaScript?",
+    response1: "To style web pages",
+    response2: "To add interactivity to web pages",
+    response3: "To create database tables",
+    response4: "To define web page structure",
+    answer: 2
+  },
+  5: {
+    question: "Which of the following is NOT a valid JavaScript variable name?",
+    response1: "myVar",
+    response2: "_myVar",
+    response3: "123Var",
+    response4: "$myVar",
+    answer: 3
+  },
+  6: {
+    question: "What is the correct way to comment in JavaScript?",
+    response1: "// This is a comment",
+    response2: "/* This is a comment */",
+    response3: "# This is a comment",
+    response4: "-- This is a comment",
+    answer: 1
+  },
+  7: {
+    question: "Which function is used to print something in the console in JavaScript?",
+    response1: "console.print()",
+    response2: "log.print()",
+    response3: "print.console()",
+    response4: "console.log()",
     answer: 4
+  },
+  8: {
+    question: "How do you define a function in JavaScript?",
+    response1: "function myFunction() {}",
+    response2: "def myFunction() {}",
+    response3: "method myFunction() {}",
+    response4: "func myFunction() {}",
+    answer: 1
+  },
+  9: {
+    question: "Which CSS property is used to change the text color of an element?",
+    response1: "text-color",
+    response2: "color",
+    response3: "font-color",
+    response4: "background-color",
+    answer: 2
+  },
+  10: {
+    question: "In HTML, which tag is used to create an unordered list?",
+    response1: "<ul>",
+    response2: "<li>",
+    response3: "<ol>",
+    response4: "<dl>",
+    answer: 1
+  },
+  11: {
+    question: "What is the purpose of the 'defer' attribute in a script tag?",
+    response1: "It loads the script asynchronously",
+    response2: "It delays the execution of the script until the page has finished parsing",
+    response3: "It sets the script to execute after a specified time interval",
+    response4: "It loads the script in the background without blocking the page rendering",
+    answer: 2
+  },
+  12: {
+    question: "How can you include an external JavaScript file in an HTML document?",
+    response1: "<script href='script.js'></script>",
+    response2: "<script src='script.js'></script>",
+    response3: "<javascript src='script.js'></javascript>",
+    response4: "<link rel='javascript' href='script.js'>",
+    answer: 2
+  },
+  13: {
+    question: "Which CSS selector is used to select elements with a specific class?",
+    response1: "#",
+    response2: ".",
+    response3: "$",
+    response4: "@",
+    answer: 2
+  },
+  14: {
+    question: "What is the purpose of the 'box-sizing' property in CSS?",
+    response1: "To set the border size of an element",
+    response2: "To control the spacing between elements",
+    response3: "To include padding and border in the element's total width and height",
+    response4: "To set the margin size of an element",
+    answer: 3
+  },
+  15: {
+    question: "Which HTML tag is used to define an image?",
+    response1: "<img>",
+    response2: "<image>",
+    response3: "<picture>",
+    response4: "<figure>",
+    answer: 1
+  },
+  16: {
+    question: "What is the purpose of the 'this' keyword in JavaScript?",
+    response1: "To refer to the current object",
+    response2: "To create a new variable",
+    response3: "To specify a CSS selector",
+    response4: "To declare a function",
+    answer: 1
+  },
+  17: {
+    question: "Which of the following is a valid way to declare a JavaScript array?",
+    response1: "let colors = [\"red\", \"green\", \"blue\"]",
+    response2: "let colors = {\"red\", \"green\", \"blue\"}",
+    response3: "let colors = \"red, green, blue\"",
+    response4: "let colors = (\"red\", \"green\", \"blue\")",
+    answer: 1
+  },
+  18: {
+    question: "In CSS, what property is used to control the layout of an element's children?",
+    response1: "display",
+    response2: "position",
+    response3: "float",
+    response4: "margin",
+    answer: 1
+  },
+  19: {
+    question: "What is the purpose of the 'localStorage' object in JavaScript?",
+    response1: "To store data permanently on the server",
+    response2: "To store data temporarily on the client's browser",
+    response3: "To store data in cookies",
+    response4: "To store data in a database",
+    answer: 2
+  },
+  20: {
+    question: "Which event is triggered when a user clicks on an HTML element?",
+    response1: "onhover",
+    response2: "onchange",
+    response3: "onclick",
+    response4: "onsubmit",
+    answer: 3
+  },
+  21: {
+    question: "What does the 'z-index' property in CSS control?",
+    response1: "Text alignment",
+    response2: "Element rotation",
+    response3: "Element stacking order",
+    response4: "Font size",
+    answer: 3
+  },  22: {
+    question: "Which method is used to add a new item to the end of an array in JavaScript?",
+    response1: "push()",
+    response2: "append()",
+    response3: "addToEnd()",
+    response4: "insertEnd()",
+    answer: 1
+  },
+  23: {
+    question: "What is the purpose of the 'transition' property in CSS?",
+    response1: "To create a smooth transition between different CSS styles",
+    response2: "To transition between different HTML pages",
+    response3: "To control the transition between JavaScript functions",
+    response4: "To apply a transition effect to images",
+    answer: 1
+  },
+  24: {
+    question: "How can you select an HTML element with the id 'myElement' using JavaScript?",
+    response1: "getElementByName('myElement')",
+    response2: "select('myElement')",
+    response3: "document.getElement('myElement')",
+    response4: "document.getElementById('myElement')",
+    answer: 4
+  },
+  25: {
+    question: "In CSS, what property is used to control the spacing between lines of text?",
+    response1: "line-height",
+    response2: "text-spacing",
+    response3: "font-spacing",
+    response4: "line-spacing",
+    answer: 1
+  },
+  26: {
+    question: "What is the purpose of the 'target' attribute in an HTML anchor tag (<a>)?",
+    response1: "To specify the link's target page",
+    response2: "To set the font size of the link",
+    response3: "To target a specific CSS class",
+    response4: "To define the link's color",
+    answer: 1
+  },
+  27: {
+    question: "How do you comment out multiple lines in JavaScript?",
+    response1: "// This is a comment",
+    response2: "/* This is a comment */",
+    response3: "-- This is a comment",
+    response4: "# This is a comment",
+    answer: 2
+  },
+  28: {
+    question: "What does the 'document' object represent in the DOM (Document Object Model)?",
+    response1: "The HTML document itself",
+    response2: "A specific HTML element",
+    response3: "The CSS stylesheet",
+    response4: "The JavaScript code",
+    answer: 1
+  },
+  29: {
+    question: "Which attribute is used to include external CSS styles in an HTML document?",
+    response1: "style",
+    response2: "link",
+    response3: "css",
+    response4: "href",
+    answer: 2
+  },
+  30: {
+    question: "What is the purpose of the 'splice' method in JavaScript arrays?",
+    response1: "To remove the last element of the array",
+    response2: "To add elements to the beginning of the array",
+    response3: "To remove or replace elements at a specific index",
+    response4: "To reverse the order of the elements",
+    answer: 3
+  },
+  31: {
+    question: "What is the purpose of the 'box-shadow' property in CSS?",
+    response1: "To add a shadow to an HTML element",
+    response2: "To create a shadow for text elements",
+    response3: "To control the shadow of an image",
+    response4: "To add a shadow to the entire page",
+    answer: 1
+  },
+  32: {
+    question: "Which event is triggered when an HTML form is submitted?",
+    response1: "onsubmit",
+    response2: "onclick",
+    response3: "onchange",
+    response4: "onsubmitform",
+    answer: 1
+  },
+  33: {
+    question: "In JavaScript, what does the 'isNaN()' function do?",
+    response1: "Checks if a value is not a string",
+    response2: "Checks if a value is not a number",
+    response3: "Checks if a value is null",
+    response4: "Checks if a value is undefined",
+    answer: 2
+  },
+  34: {
+    question: "Which of the following is NOT a valid CSS display property value?",
+    response1: "block",
+    response2: "inline",
+    response3: "stack",
+    response4: "flex",
+    answer: 3
+  },
+  35: {
+    question: "What does the 'JSON' acronym stand for?",
+    response1: "JavaScript Object Notation",
+    response2: "Java Syntax Object Notation",
+    response3: "JavaScript Oriented Network",
+    response4: "Java Object Naming",
+    answer: 1
+  },
+  36: {
+    question: "How can you prevent the default behavior of an HTML element's event in JavaScript?",
+    response1: "event.prevent()",
+    response2: "event.stop()",
+    response3: "event.cancel()",
+    response4: "event.preventDefault()",
+    answer: 4
+  },
+  37: {
+    question: "Which CSS property is used to create rounded corners?",
+    response1: "corner-radius",
+    response2: "border-round",
+    response3: "border-radius",
+    response4: "corner-round",
+    answer: 3
+  },
+  38: {
+    question: "What is the purpose of the 'localStorage' object in JavaScript?",
+    response1: "To store data permanently on the server",
+    response2: "To store data temporarily on the client's browser",
+    response3: "To store data in cookies",
+    response4: "To store data in a database",
+    answer: 2
+  },
+  39: {
+    question: "How do you add a comment in HTML?",
+    response1: "<!-- This is a comment -->",
+    response2: "// This is a comment",
+    response3: "' This is a comment",
+    response4: "# This is a comment",
+    answer: 1
+  },
+  40: {
+    question: "Which method is used to remove the last item from an array in JavaScript?",
+    response1: "remove()",
+    response2: "pop()",
+    response3: "delete()",
+    response4: "shift()",
+    answer: 2
+  },
+  41: {
+    question: "What does CSS stand for?",
+    response1: "Counter Style Sheets",
+    response2: "Colorful Style Sheets",
+    response3: "Computer Style Sheets",
+    response4: "Cascading Style Sheets",
+    answer: 4
+  },
+  42: {
+    question: "In JavaScript, what is the purpose of the 'setTimeout()' function?",
+    response1: "To set a timer for a function to execute after a specified delay",
+    response2: "To stop the execution of a function",
+    response3: "To delay the loading of a script",
+    response4: "To synchronize animations",
+    answer: 1
+  },
+  43: {
+    question: "Which HTML tag is used to define a table row?",
+    response1: "<tr>",
+    response2: "<td>",
+    response3: "<table-row>",
+    response4: "<row>",
+    answer: 1
+  },
+  44: {
+    question: "What is the purpose of the 'flexbox' layout in CSS?",
+    response1: "To create flexible box-like structures",
+    response2: "To style text elements",
+    response3: "To control image sizes",
+    response4: "To apply borders to elements",
+    answer: 1
+  },
+  45: {
+    question: "How do you apply an external CSS file to only print media?",
+    response1: "<link rel='stylesheet' href='styles.css' media='print'>",
+    response2: "<link rel='print' href='styles.css'>",
+    response3: "<style media='print'>",
+    response4: "<style type='print' src='styles.css'>",
+    answer: 1
+  },
+  46: {
+    question: "What is the purpose of the 'typeof' operator in JavaScript?",
+    response1: "To check if a variable is defined",
+    response2: "To determine the type of a variable",
+    response3: "To convert a variable to a different type",
+    response4: "To declare a new variable",
+    answer: 2
+  },
+  47: {
+    question: "Which HTML tag is used to create a clickable button?",
+    response1: "<button>",
+    response2: "<clickable>",
+    response3: "<input type='button'>",
+    response4: "<btn>",
+    answer: 1
+  },
+  48: {
+    question: "What is the purpose of the 'keydown' event in JavaScript?",
+    response1: "To trigger when a key is pressed down",
+    response2: "To trigger when a key is released",
+    response3: "To trigger when a mouse button is clicked",
+    response4: "To trigger when an element is focused",
+    answer: 1
+  },
+  49: {
+    question: "In CSS, what is the 'box model' used for?",
+    response1: "To create rounded corners",
+    response2: "To control the layout and spacing of elements",
+    response3: "To apply shadows to elements",
+    response4: "To define the order of stacked elements",
+    answer: 2
+  },
+  50: {
+    question: "Which method is used to join two or more arrays in JavaScript?",
+    response1: "concat()",
+    response2: "join()",
+    response3: "merge()",
+    response4: "combine()",
+    answer: 1
   }
 };
 
@@ -297,7 +679,7 @@ function displayResultMessage() {
     nextQuestion();
     resetElementColor(".button");
     addQuizEventListeners();
-  }, 5000);
+  }, 500);
 }
 
 
