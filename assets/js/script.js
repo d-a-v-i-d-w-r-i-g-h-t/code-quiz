@@ -30,8 +30,8 @@ let initialsInput = document.getElementById("initials-input");
 let resultMessageEl = document.getElementById("result-message");
 
 // global constants
-const quizDuration = 33; // quiz duration in seconds
-const penalty = 0; // seconds removed from timer for each incorrect response
+const quizDuration = 180; // quiz duration in seconds
+const penalty = 10; // seconds removed from timer for each incorrect response
 const secondsPerMinute = 60; // 60 seconds in a minute
 const leadingZero = "0"; // used to pad timer seconds to ensure two digit seconds value
 const ten = 10; // used to check if leading zero is required
@@ -503,8 +503,8 @@ function startQuiz() {
   quizMode();
   resetElementColor("#timer");
   startTimer();
-  questionListNumber = -1;
-  getRandomizedQuestionList()
+  questionListNumber = 0;
+  // getRandomizedQuestionList()
   nextQuestion();
 
   addQuizEventListeners();
@@ -625,7 +625,13 @@ function nextQuestion() {
     endQuiz();
   } else {
     // update question and response text
-    let index = randomizedQuestionList[questionListNumber]
+    // let index = randomizedQuestionList[questionListNumber];
+    let index = questionListNumber;
+
+    // console.log(randomizedQuestionList);
+    // console.log(questionListNumber);
+    // console.log(index);
+
     questionEl.textContent = questions[index].question;
     response1.textContent = one + questions[index].response1;
     response2.textContent = two + questions[index].response2;
@@ -642,7 +648,8 @@ function nextQuestion() {
 
 function checkAnswer(key) {
   let responseIsCorrect = false;
-  let index = randomizedQuestionList[questionListNumber]
+  // let index = randomizedQuestionList[questionListNumber]
+  let index = questionListNumber;
   let correctAnswer = questions[index].answer;
   if (key == correctAnswer) {
     responseIsCorrect = true;
@@ -674,7 +681,7 @@ function displayResultMessage() {
   // turn off event listeners
   showElement(resultMessageEl);
   removeQuizEventListeners();
-console.log("Display result");
+
   // wait a specified time before user can proceed to the next question
   // turn event listeners back on
   setTimeout(function(){
@@ -692,29 +699,30 @@ console.log("Display result");
  //  Function: getRandomizedQuestionList  //
 //--------------------------------------//
 
-function getRandomizedQuestionList() {
-  let numberOfQuestions = Object.keys(questions).length;
-  let list = [];
+// function getRandomizedQuestionList() {
+//   let numberOfQuestions = Object.keys(questions).length;
+//   let list = [];
 
-  // create ordered list
-  for (let i = 0; i < numberOfQuestions; i++) {
-    list[i] = i+1; // array is zero-based while question list is 1-based
-  }
-  randomizedQuestionList = [];
-  for (i = 0; i < list.length; i++) {
-    randomItem = getRandomItem(list);
-    randomizedQuestionList.push(randomItem);
-    // remove the "used" item from the input list so each question number is only used once
-    list = list.splice(list.indexOf(randomItem),1);
-  }
-}
+//   // create ordered list
+//   for (let i = 0; i < numberOfQuestions; i++) {
+//     list[i] = i+1; // array is zero-based while question list is 1-based
+//   }
+//   console.log(list);
+//   randomizedQuestionList = [];
+//   for (i = 0; i < list.length; i++) {
+//     randomItem = getRandomItem(list);
+//     randomizedQuestionList.push(randomItem);
+//     // remove the "used" item from the input list so each question number is only used once
+//     list = list.splice(list.indexOf(randomItem),1);
+//   }
+//   console.log(randomizedQuestionList);
+// }
 
-
-function getRandomItem(inputArray) {
-  var randomIndex = Math.floor(Math.random() * inputArray.length);
-  var randomListItem = inputArray[randomIndex];
-  return randomListItem;
-}
+// function getRandomItem(inputArray) {
+//   var randomIndex = Math.floor(Math.random() * inputArray.length);
+//   var randomListItem = inputArray[randomIndex];
+//   return randomListItem;
+// }
 
 
 function colorQuizBorder(color) {
@@ -763,7 +771,7 @@ function secondsRemaining() {
 // function from project word-guess with Steve Sills
 function resolveKeyPress(event) {
   keyPress = event.key;
-  console.log(keyPress);
+  // console.log(keyPress);
 
   let validSelection = false
 
@@ -900,34 +908,34 @@ function clearHighScores() {
 }
 
 // FOR TESTING
-function initializeHighScores() {
-  highScores = {
-    1: {initials: "DSW", score: 58},
-    2: {initials: "KCW", score: 56},
-    3: {initials: "GTW", score: 52},
-    4: {initials: "JAZ", score: 46},
-    5: {initials: "IMW", score: 41},
-    6: {initials: "MSW", score: 38},
-    7: {initials: "PWM", score: 31},
-    8: {initials: "GWM", score: 22},
-    9: {initials: "RJM", score: 13},
-    10: {initials: "PMW", score: 7}
-  };
-}
 // function initializeHighScores() {
 //   highScores = {
-//     1: {initials: "", score: ""},
-//     2: {initials: "", score: ""},
-//     3: {initials: "", score: ""},
-//     4: {initials: "", score: ""},
-//     5: {initials: "", score: ""},
-//     6: {initials: "", score: ""},
-//     7: {initials: "", score: ""},
-//     8: {initials: "", score: ""},
-//     9: {initials: "", score: ""},
-//     10: {initials: "", score: ""}
+//     1: {initials: "DSW", score: 58},
+//     2: {initials: "KCW", score: 56},
+//     3: {initials: "GTW", score: 52},
+//     4: {initials: "JAZ", score: 46},
+//     5: {initials: "IMW", score: 41},
+//     6: {initials: "MSW", score: 38},
+//     7: {initials: "PWM", score: 31},
+//     8: {initials: "GWM", score: 22},
+//     9: {initials: "RJM", score: 13},
+//     10: {initials: "PMW", score: 7}
 //   };
 // }
+function initializeHighScores() {
+  highScores = {
+    1: {initials: "", score: ""},
+    2: {initials: "", score: ""},
+    3: {initials: "", score: ""},
+    4: {initials: "", score: ""},
+    5: {initials: "", score: ""},
+    6: {initials: "", score: ""},
+    7: {initials: "", score: ""},
+    8: {initials: "", score: ""},
+    9: {initials: "", score: ""},
+    10: {initials: "", score: ""}
+  };
+}
 
 
 
